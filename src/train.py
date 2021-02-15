@@ -1,12 +1,15 @@
+import os
 import joblib
 import pandas as pd
-from sklearn import tree
 from sklearn import metrics
+import config
+import argparse
+import model_dispatcher
 
 
-def run(fold):
+def run(fold, model):
     # read the training data with folds
-    df = pd.read_csv("../input/SSL_Ren_first_2000_kfolds.csv")
+    df = pd.read_csv(config.TRAINING_FILE)
 
     # training data is where kfold is not equal to provided fold
     # also, note that we reset the index
@@ -25,8 +28,7 @@ def run(fold):
     y_valid = df_valid.label.values
 
     # initialize simple decision tree classifier from sklearn
-    clf = tree.DecisionTreeClassifier()
-
+    clf = model_dispatcher.models[model]
     # fit the model on training data
     clf.fit(x_train, y_train)
 
@@ -35,13 +37,23 @@ def run(fold):
 
     # calculate and print accuracy
     accuracy = metrics.accuracy_score(y_valid, preds)
+    print(f"Fold={fold}, Accuracy={accuracy}")
 
     # save the model
-    joblib.dump(clf, f"../models//ssl_renego_df_{fold}.bin")
+    joblib.dump(clf, os.path.join(config.MODEL_OUTPUT, "ssl_renego_df_{fold}.bin"))
 
 
 if __name__ == "__main__":
-    run(fold=0)
-    run(fold=1)
-    run(fold=2)
-    run(fold=3)
+    # initialize ArgumentParser class of argparse
+    parser = argparse.ArgumentParser()
+
+    # add different arguments we need and their type
+    # we only need kfold atm
+    parser.add_argument("--fold", type=int)
+    parser.add_argument("--model", type=str)
+
+    # read the arguments from the command line
+    args = parser.parse_args()
+
+    # run the fold specified by command line arguments
+    run(fold=args.fold, model=args.model)
