@@ -5,6 +5,8 @@ from pyspark.ml.pipeline import Pipeline
 from pyspark.sql import dataframe
 
 # retrieve numeric data only
+from pyspark.sql.functions import col
+
 k = 2
 
 
@@ -17,21 +19,23 @@ def create_pipeline(df: dataframe.DataFrame):
         inputCols=[x for x in df.columns if x != "label"],
         outputCol="features"
     )
-    assembled_df = assembler.transform(df)
-    k_means = KMeans().setK(k).setSeed(1).setPredictionCol("prediction").setFeaturesCol("features")
-    # pipeline = Pipeline().setStages([assembler, k_means])
-    model = k_means.fit(assembled_df)
-    # predictions = model.transform(df)
-    # print("Schema after transformation:")
-    # predictions.printSchema()
-    # predictions.take(20)
+    # assembled_df = assembler.transform(df)
+    k_means = KMeans().setK(k).setSeed(1).setPredictionCol("cluster").setFeaturesCol("features")
+    pipeline = Pipeline().setStages([assembler, k_means])
+    # model = k_means.fit(assembled_df)
+    pipeline_model = pipeline.fit(df)
+    with_cluster = pipeline_model.transform(df)
 
-    # evaluator = ClusteringEvaluator()
-    # silhouette = evaluator.evaluate(predictions)
-    # print("Silhouette with squared euclidean distance = " + str(silhouette))
+    # print("Schema after transformation:")
+    with_cluster.printSchema()
 
     # Shows the result.
-    centers = model.clusterCenters()
-    print("Cluster Centers: ")
-    for center in centers:
-        print(center)
+    transformed_df = with_cluster.select("cluster", "label").groupBy("cluster", "label").count()\
+        .orderBy(col("cluster").asc(), col("label").desc())
+
+    transformed_df.show()
+    # centers = model.clusterCenters()
+    # print("Cluster Centers: ")
+    # for center in centers:
+    #     print(center)
+

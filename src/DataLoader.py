@@ -9,8 +9,6 @@ def load_data():
         data_path,
         format="csv", sep=",", inferSchema="true", header="true")
     print("Loaded data with schema: ")
-    df.printSchema()
-    # show(df)
     return df
 
 
