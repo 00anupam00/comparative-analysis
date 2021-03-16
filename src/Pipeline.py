@@ -34,6 +34,7 @@ def create_pipeline(df: dataframe.DataFrame):
         .orderBy(col("cluster").asc(), col("label").desc())
 
     transformed_df.show()
+    return transformed_df
     # centers = model.clusterCenters()
     # print("Cluster Centers: ")
     # for center in centers:
