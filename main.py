@@ -6,7 +6,6 @@ if __name__ == '__main__':
     df = DataLoader.load_data()
     tf_df = Pipeline.create_pipeline(df)
 
-    # FIXME
     Visualization.visualize_data(tf_df)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
