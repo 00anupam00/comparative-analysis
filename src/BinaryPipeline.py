@@ -17,6 +17,8 @@ def create_pipeline(df: dataframe.DataFrame, estimator):
     pipeline_model = pipeline.fit(df)
     predictions = pipeline_model.transform(df)
 
+    # todo Evaluators and hyper tuning is the next step
+
     # print("Schema after transformation:")
     predictions.printSchema()
 
