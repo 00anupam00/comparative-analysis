@@ -1,6 +1,6 @@
 import sys, getopt
 
-from src import DataLoader, BinaryPipeline, Estimators
+from src import DataLoader, BinaryPipeline, Estimators, Evaluators
 
 
 def run(argv):
@@ -23,8 +23,15 @@ def run(argv):
     df = DataLoader.load_data()
     # tf_df = Pipeline.create_pipeline(df)
     tf_df = BinaryPipeline.create_pipeline(df, estimator)
+
+    # Evaluator
+    Evaluators.evaluate_binary_classifier(tf_df)
+
     # FIXME
     # Visualization.visualize_data(tf_df)
+
+    # todo
+    # Fix the dataset with appropriate labels. Or use another dataset
 
 
 # Press the green button in the gutter to run the script.

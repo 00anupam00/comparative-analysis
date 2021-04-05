@@ -19,12 +19,12 @@ def create_pipeline(df: dataframe.DataFrame, estimator):
 
     # todo Evaluators and hyper tuning is the next step
 
-    # print("Schema after transformation:")
+    print("Schema after transformation:")
     predictions.printSchema()
 
     # Shows the result.
 
-    pass
+    return predictions
     # centers = model.clusterCenters()
     # print("Cluster Centers: ")
     # for center in centers:
