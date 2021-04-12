@@ -1,8 +1,6 @@
 from pyspark.ml import Pipeline
-from pyspark.ml.classification import RandomForestClassifier
 from pyspark.ml.feature import VectorAssembler
 from pyspark.sql import dataframe
-from pyspark.sql.functions import col
 
 from src import Estimators
 

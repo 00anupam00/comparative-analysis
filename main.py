@@ -1,6 +1,7 @@
 import sys, getopt
 
 from src import DataLoader, BinaryPipeline, Estimators, Evaluators
+from src.Paths import ssl_reneg_dataset, ssl_reneg_labels
 
 
 def run(argv):
@@ -20,14 +21,22 @@ def run(argv):
 
     print("Selected Estimator is: ", estimator)
 
-    df = DataLoader.load_data()
+    # 1. Load and pre-process data
+    df = DataLoader.load_data(ssl_reneg_dataset, ssl_reneg_labels)
+
+    # fixme 1.1 Limit the last 100000 records for preserving memory
+    df = df.orderBy('id', ascending=False).limit(100000)
+
+    #2. Create Pipelines
     # tf_df = Pipeline.create_pipeline(df)
     tf_df = BinaryPipeline.create_pipeline(df, estimator)
 
+    #3. Evaluate
     # Evaluator
     Evaluators.evaluate_binary_classifier(tf_df)
 
     # FIXME
+    # Visualize
     # Visualization.visualize_data(tf_df)
 
     # todo

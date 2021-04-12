@@ -1,42 +1,42 @@
-from pcapfile import savefile
 from pyspark.sql import SparkSession
-from scapy.all import rdpcap
+from pyspark.sql.functions import monotonically_increasing_id
+from pyspark.sql.types import StructType, StructField, LongType, StringType, IntegerType
 
-from src.Paths import pcap_filepath, labels_path
+from src.Paths import ssl_reneg_labels, ssl_reneg_dataset
+from src.PrePocessor import pre_process_data
 
 spark = SparkSession.builder.appName("outlier-detection").getOrCreate()
 
 
-def load_data(path):
-    df = spark.read.load(
-        path,
-        format="csv", sep=",", inferSchema="true", header="true")
-    print("Loaded data with schema: ")
+def load_data(data_path, labels_path):
+    df_data = spark.read.load(
+        data_path,
+        format="csv", sep=",", inferSchema="true", header="false")
+    print("Loaded dataset. ")
+
+    labels_schema = StructType([StructField("id", LongType(), False),
+                                StructField("label", IntegerType(), False)])
+    df_labels = spark.read.load(
+        labels_path,
+        format="csv",
+        sep=",",
+        inferSchema="false",
+        schema=labels_schema,
+        header="true")
+    print("Loaded labels. ")
+
+    # Pass through data pre-processor
+    df = pre_process_data(df_data, df_labels)
     return df
 
 
 def show(df):
-    df.printSchema()
     df.describe().show(25)
+    print("The last 10 lines of the dataset: ")
+    print(df.tail(10))
 
 
 def analyze_labels(df):
     df = df.select("id", "label").groupBy("label").count().orderBy("count", ascending=False)
     show(df)
 
-
-# Using pcapfile
-def parse_pcap(filepath):
-    test_cap = open(filepath, 'rb')
-    pcap_file = savefile.load_savefile(test_cap, verbose=True)
-    print("Pcap file ", pcap_file)
-
-
-# Using scapy
-def parse_pcap_with_scapy(filepath):
-    a = rdpcap(filepath)
-
-## TEST
-if __name__ == '__main__':
-    # analyze_labels(load_data(labels_path))
-    parse_pcap(pcap_filepath) # not needed
