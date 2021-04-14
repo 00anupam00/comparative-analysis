@@ -16,3 +16,4 @@ def visualize_data(tf_df: dataframe.DataFrame):
     three_d.set_ylabel('y')
     three_d.set_zlabel('z')
     plt.show()
+    # use spark dataframe.plot

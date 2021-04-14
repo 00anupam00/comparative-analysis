@@ -33,6 +33,7 @@ def create_pipeline(df: dataframe.DataFrame):
     transformed_df = with_cluster.select("cluster", "label").groupBy("cluster", "label").count()\
         .orderBy(col("cluster").asc(), col("label").desc())
 
+    print("Transformed df:")
     transformed_df.show()
     return transformed_df
     # centers = model.clusterCenters()
