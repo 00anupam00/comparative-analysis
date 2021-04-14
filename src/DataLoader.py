@@ -22,6 +22,7 @@ def load_data(data_path, labels_path):
         sep=",",
         inferSchema="false",
         schema=labels_schema,
+        mode="DROPMALFORMED",
         header="true")
     print("Loaded labels. ")
 
