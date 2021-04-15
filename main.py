@@ -1,8 +1,26 @@
 import sys, getopt
 
-from src import DataLoader, BinaryPipeline, Estimators, Evaluators, Visualization
-from src.Paths import ssl_reneg_dataset, ssl_reneg_labels, arp_spoof_dataset, arp_spoof_labels, syn_dos_labels, \
+from src.binary import Evaluators, Estimators, BinaryPipeline, DataLoader
+from src.Paths import syn_dos_labels, \
     syn_dos_dataset
+
+
+def binaryClassify(df, estimator):
+    # tf_df = Pipeline.create_pipeline(df)
+    tf_df = BinaryPipeline.create_pipeline(df, estimator)
+
+    # Evaluator
+    Evaluators.evaluate_binary_classifier(tf_df)
+
+    # FIXME
+    # Visualize
+    tf_df.printSchema()
+    # Visualization.visualize_data(tf_df)
+    pass
+
+
+def categoricalClustering():
+    pass
 
 
 def run(argv):
@@ -30,18 +48,10 @@ def run(argv):
     # fixme 1.1 Limit the last 100000 records for preserving memory
     df = df.orderBy('id', ascending=False).limit(1000)
 
-    #2. Create Pipelines
-    # tf_df = Pipeline.create_pipeline(df)
-    tf_df = BinaryPipeline.create_pipeline(df, estimator)
+    binaryClassify(df, estimator)
+    categoricalClustering()
 
-    #3. Evaluate
-    # Evaluator
-    Evaluators.evaluate_binary_classifier(tf_df)
 
-    # FIXME
-    # Visualize
-    tf_df.printSchema()
-    # Visualization.visualize_data(tf_df)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

@@ -2,7 +2,7 @@ from pyspark.ml import Pipeline
 from pyspark.ml.feature import VectorAssembler
 from pyspark.sql import dataframe
 
-from src import Estimators
+from src.binary import Estimators
 
 
 def create_pipeline(df: dataframe.DataFrame, estimator):

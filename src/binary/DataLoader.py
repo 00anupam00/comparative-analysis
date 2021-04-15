@@ -1,11 +1,10 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import monotonically_increasing_id
-from pyspark.sql.types import StructType, StructField, LongType, StringType, IntegerType
+from pyspark.sql.types import StructType, StructField, LongType, IntegerType
 
-from src.Paths import ssl_reneg_labels, ssl_reneg_dataset
-from src.PrePocessor import pre_process_data
+from src.SparkConfig import get_spark_session
+from src.binary.PrePocessor import pre_process_data
 
-spark = SparkSession.builder.appName("outlier-detection").getOrCreate()
+spark = get_spark_session("outlier-detection")
 
 
 def load_data(data_path, labels_path):
@@ -40,4 +39,3 @@ def show(df):
 def analyze_labels(df):
     df = df.select("id", "label").groupBy("label").count().orderBy("count", ascending=False)
     show(df)
-
