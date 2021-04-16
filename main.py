@@ -3,6 +3,8 @@ import sys, getopt
 from src.binary import Evaluators, Estimators, BinaryPipeline, DataLoader
 from src.Paths import syn_dos_labels, \
     syn_dos_dataset
+from src.cluster.DataPreProcessor import load_dataset_with_categories, df_with_id
+from src.cluster.KMeansPipeline import process_pipeline
 
 
 def binaryClassify(df, estimator):
@@ -20,7 +22,10 @@ def binaryClassify(df, estimator):
 
 
 def categoricalClustering():
-    pass
+    df = load_dataset_with_categories()
+    df = df_with_id(df)
+    transformed_df = process_pipeline(df)
+    return transformed_df
 
 
 def run(argv):
@@ -44,11 +49,10 @@ def run(argv):
     # df = DataLoader.load_data(ssl_reneg_dataset, ssl_reneg_labels)
     # df = DataLoader.load_data(arp_spoof_dataset, arp_spoof_labels)
     df = DataLoader.load_data(syn_dos_dataset, syn_dos_labels)
-
     # fixme 1.1 Limit the last 100000 records for preserving memory
     df = df.orderBy('id', ascending=False).limit(1000)
 
-    binaryClassify(df, estimator)
+    # binaryClassify(df, estimator)
     categoricalClustering()
 
 

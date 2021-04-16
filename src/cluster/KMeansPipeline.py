@@ -7,10 +7,10 @@ from pyspark.sql.functions import col
 
 # get an estimate of K using elbow method
 def determine_K():
-    return 2
+    return 3
 
 
-def create_pipeline(df: dataframe.DataFrame):
+def process_pipeline(df: dataframe.DataFrame):
     assembler = VectorAssembler(
         inputCols=[x for x in df.columns if x != "label"],
         outputCol="features"

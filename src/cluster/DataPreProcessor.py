@@ -50,6 +50,6 @@ def create_union(dfs: list):
 # Test
 if __name__ == '__main__':
     df = load_dataset_with_categories()
-    df = df_with_id(df)
-    df.printSchema()
-    df.count()
+    # df = df_with_id(df)
+    # df.printSchema()
+    df.select("_c0").show()
