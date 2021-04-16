@@ -20,14 +20,14 @@ def process_pipeline(df: dataframe.DataFrame):
     pipeline = Pipeline().setStages([assembler, k_means])
     # model = k_means.fit(assembled_df)
     pipeline_model = pipeline.fit(df)
-    with_cluster = pipeline_model.transform(df)
+    transformed_df = pipeline_model.transform(df)
 
     # print("Schema after transformation:")
-    with_cluster.printSchema()
+    transformed_df.printSchema()
 
     # Shows the result.
-    transformed_df = with_cluster.select("cluster", "label").groupBy("cluster", "label").count() \
-        .orderBy(col("cluster").asc(), col("label").desc())
+    # transformed_df = with_cluster.select("cluster", "label").groupBy("cluster", "label").count() \
+    #     .orderBy(col("cluster").asc(), col("label").desc())
 
     print("Transformed df:")
     transformed_df.show()
