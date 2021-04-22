@@ -1,8 +1,7 @@
 from pyspark.sql.functions import lit
-from pyspark.sql.types import StructType
 
-from src.SparkConfig import get_spark_session
 from src.Paths import ssl_reneg_dataset, arp_spoof_dataset, syn_dos_dataset
+from src.SparkConfig import get_spark_session
 from src.utils.Utils import generate_id
 
 spark = get_spark_session("outlier-detection")
@@ -46,10 +45,9 @@ def create_union(dfs: list):
         df_U.union(df)
     return df_U
 
-
-# Test
-if __name__ == '__main__':
-    df = load_dataset_with_categories()
-    # df = df_with_id(df)
-    # df.printSchema()
-    df.select("_c0").show()
+# # Test
+# if __name__ == '__main__':
+#     df = load_dataset_with_categories()
+#     # df = df_with_id(df)
+#     # df.printSchema()
+#     df.select("_c0").show()

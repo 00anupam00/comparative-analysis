@@ -2,7 +2,19 @@ from pyspark.ml import Pipeline
 from pyspark.ml.feature import VectorAssembler
 from pyspark.sql import dataframe
 
-from src.binary import Estimators
+from src.utils.Estimators import get_estimator
+
+
+def calculate_metrics(trainingSummary):
+    accuracy = trainingSummary.accuracy
+    falsePositiveRate = trainingSummary.weightedFalsePositiveRate
+    truePositiveRate = trainingSummary.weightedTruePositiveRate
+    fMeasure = trainingSummary.weightedFMeasure()
+    precision = trainingSummary.weightedPrecision
+    recall = trainingSummary.weightedRecall
+    print("Accuracy: %s\nFPR: %s\nTPR: %s\nF-measure: %s\nPrecision: %s\nRecall: %s"
+          % (accuracy, falsePositiveRate, truePositiveRate, fMeasure, precision, recall))
+    pass
 
 
 def create_pipeline(df: dataframe.DataFrame, estimator):
@@ -10,20 +22,17 @@ def create_pipeline(df: dataframe.DataFrame, estimator):
         inputCols=[x for x in df.columns if x != "label"],
         outputCol="features"
     )
+    test, train = df.randomSplit([0.6, 0.4], seed=12345)
 
-    pipeline = Pipeline(stages=[assembler, Estimators.get_estimator(estimator)])
-    pipeline_model = pipeline.fit(df)
-    predictions = pipeline_model.transform(df)
+    pipeline = Pipeline(stages=[assembler, get_estimator(estimator)])
+    # train
+    train_model = pipeline.fit(train)
 
-    # todo Evaluators and hyper tuning is the next step
+    # training summary
+    # calculate_metrics(train_model.summary)
 
-    print("Schema after transformation:")
-    predictions.printSchema()
+    # make predictions
+    predictions = train_model.transform(test)
 
     # Shows the result.
-
     return predictions
-    # centers = model.clusterCenters()
-    # print("Cluster Centers: ")
-    # for center in centers:
-    #     print(center)
