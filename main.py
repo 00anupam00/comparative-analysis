@@ -51,7 +51,6 @@ def multiclassClassify(estimator):
     tf_df = process_multiclass_pipeline(df, estimator=estimator)
     print("Metrics for Estimator: ",str(estimator))
     evaluate_multiclass(tf_df)
-    tf_df.show(10)
 
 
 def run(argv):
@@ -71,8 +70,8 @@ def run(argv):
 
     print("Selected Estimator is: ", estimator)
 
-    binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
-    # multiclassClassify(estimator=estimator)
+    # binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
+    multiclassClassify(estimator=estimator)
 
 
 # Press the green button in the gutter to run the script.

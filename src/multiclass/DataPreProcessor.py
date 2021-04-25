@@ -8,15 +8,12 @@ spark = get_spark_session("outlier-detection")
 
 
 def load_dataset_with_categories():
-    df_ssl = load_data(ssl_reneg_dataset, ssl_reneg_labels, 'a')
-    # todo use the existing label other than labelling manually
-    # todo use string labels "ssl", "b"
-    # todo Use FE after setting benchmarks
-    df_arp = load_data(arp_spoof_dataset, arp_spoof_labels, 'b')
-    df_syn = load_data(syn_dos_dataset, syn_dos_labels, 'c')
+    df_ssl = load_data(ssl_reneg_dataset, ssl_reneg_labels, 1)
+    df_arp = load_data(arp_spoof_dataset, arp_spoof_labels, 2)
+    df_syn = load_data(syn_dos_dataset, syn_dos_labels, 3)
 
     # FIXME Remove
-    df_arp, df_ssl, df_syn = limit_rows(df_arp, df_ssl, df_syn)
+    # df_arp, df_ssl, df_syn = limit_rows(df_arp, df_ssl, df_syn)
 
     df = create_union([df_ssl, df_syn, df_arp])
     return df

@@ -23,8 +23,8 @@ def estimators_for_multiclass():
     _estimators = {
         'random_forest': RandomForestClassifier(labelCol="label", featuresCol="features", numTrees=10),
         'decision_tree': DecisionTreeClassifier(labelCol="label", featuresCol="features"),
-        'gbt': GBTClassifier(labelCol="label", featuresCol="features"),
-        'nb': NaiveBayes(smoothing=1.0, modelType="multinomial"),
+        # 'gbt': GBTClassifier(labelCol="label", featuresCol="features"),
+        'nb': NaiveBayes(),
         'perceptron' : MultilayerPerceptronClassifier(maxIter=100, layers=layers, blockSize=128, seed=1234)
     }
     return _estimators
@@ -36,3 +36,6 @@ def get_estimator_keys():
 
 def get_estimator(key):
     return estimators_for_classifiers()[key]
+
+def get_estimator_for_multiclass(key):
+    return estimators_for_multiclass()[key]
