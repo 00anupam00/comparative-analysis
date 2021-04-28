@@ -1,8 +1,8 @@
 from pyspark.ml import Pipeline
-from pyspark.ml.feature import VectorAssembler, StringIndexer
+from pyspark.ml.feature import VectorAssembler
 from pyspark.sql import dataframe
 
-from src.utils.Estimators import get_estimator, get_estimator_for_multiclass
+from src.utils.Estimators import get_estimator_for_multiclass
 
 
 def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
@@ -12,8 +12,13 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
         handleInvalid="skip"
     )
 
+
     # Split the data into training and test sets (30% held out for testing)
     (trainingData, testData) = df.randomSplit([0.7, 0.3])
+
+    # debug
+    trainingData.describe()
+    trainingData.printSchema()
 
     estimator = get_estimator_for_multiclass(estimator)
 
@@ -25,6 +30,6 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
     # print("Schema after transformation:")
     print("Transformed df:")
     transformed_df.printSchema()
-    transformed_df.select("id", "prediction", "rawPrediction", "probability", "label").show(5)
+    # transformed_df.select("id", "prediction", "rawPrediction", "probability", "label").show(5)
 
     return transformed_df
