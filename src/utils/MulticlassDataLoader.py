@@ -1,4 +1,4 @@
-from pyspark.sql.functions import regexp_replace
+from pyspark.sql.functions import regexp_replace, when, lit
 from pyspark.sql.types import StructType, StructField, LongType, IntegerType, StringType
 
 from src.SparkConfig import get_spark_session
@@ -14,7 +14,7 @@ def load_data(data_path, labels_path, multiclass_param):
     print("Loaded dataset. ")
 
     labels_schema = StructType([StructField("id", LongType(), False),
-                                StructField("label", StringType(), False)])
+                                StructField("label", IntegerType(), False)])
     df_labels = spark.read.load(
         labels_path,
         format="csv",
@@ -22,10 +22,11 @@ def load_data(data_path, labels_path, multiclass_param):
         inferSchema="false",
         schema=labels_schema,
         mode="DROPMALFORMED",
-        header="true").withColumn('label', regexp_replace('label', '1', multiclass_param))
+        header="true")
+    df_labels = df_labels.withColumn('label', when(df_labels.label == 1, lit(multiclass_param)).otherwise(lit(0)))
 
     print("Loaded labels. ")
-    df_labels.show()
+    # df_labels.select("id", "label").orderBy('id', ascending=False).show()
 
     # Pass through data pre-processor
     df = pre_process_data(df_data, df_labels)

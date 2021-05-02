@@ -1,15 +1,18 @@
 import getopt
 import sys
 
+from pyspark.ml.evaluation import BinaryClassificationEvaluator, MulticlassClassificationEvaluator
+
+from src.Paths import syn_dos_labels, \
+    syn_dos_dataset
+# from src.MulticlassPipeline import process_multiclass_pipeline
+from src.Tuning import evaluate_with_train_validation_split
+from src.binary import Evaluators, BinaryPipeline
+from src.binary.DataLoader import load_data
 from src.multiclass.DataPreProcessor import load_dataset_with_categories, df_with_id
 from src.multiclass.Evaluators import evaluate_multiclass
 from src.multiclass.MulticlassPipeline import process_multiclass_pipeline
 from src.utils import Estimators
-from src.Paths import syn_dos_labels, \
-    syn_dos_dataset
-# from src.MulticlassPipeline import process_multiclass_pipeline
-from src.binary import Evaluators, BinaryPipeline
-from src.binary.DataLoader import load_data
 
 
 # from src.cluster.KMeansPipeline import process_pipeline
@@ -21,7 +24,7 @@ def binaryClassify(estimator):
     # df = DataLoader.load_data(arp_spoof_dataset, arp_spoof_labels)
     df = load_data(syn_dos_dataset, syn_dos_labels)
     # fixme 1.1 Limit the last 100000 records for preserving memory
-    df = df.orderBy('id', ascending=False).limit(100000)
+    # df = df.orderBy('id', ascending=False).limit(100000)
 
     # tf_df = Pipeline.create_pipeline(df)
     tf_df = BinaryPipeline.create_pipeline(df, estimator)
@@ -33,26 +36,26 @@ def binaryClassify(estimator):
     # Visualize
     tf_df.printSchema()
     # Visualization.visualize_data(tf_df)
-    pass
-
-
-# FIXME not in use
-# def categoricalClustering():
-#     df = load_dataset_with_categories()
-#     df = df_with_id(df)
-#     transformed_df = process_pipeline(df)
-#     evaluate_KMeans(transformed_df)
-#     visualize_data(transformed_df)
 
 
 def multiclassClassify(estimator):
     df = load_dataset_with_categories()
     df = df_with_id(df)
     tf_df = process_multiclass_pipeline(df, estimator=estimator)
-    print("Metrics for Estimator: ",str(estimator))
+    print("Metrics for Estimator: ", str(estimator))
     evaluate_multiclass(tf_df)
-    tf_df.show(10)
 
+
+def tune_binary(estimator):
+    df = load_data(syn_dos_dataset, syn_dos_labels)
+    evaluator = BinaryClassificationEvaluator(labelCol="label", rawPredictionCol="prediction")
+    evaluate_with_train_validation_split(df, estimator, evaluator)
+
+def tune_multiclass(estimator):
+    df = load_dataset_with_categories()
+    df = df_with_id(df)
+    evaluator = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction")
+    evaluate_with_train_validation_split(df, estimator, evaluator)
 
 def run(argv):
     estimator = ''
@@ -73,6 +76,10 @@ def run(argv):
 
     binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
     # multiclassClassify(estimator=estimator)
+
+    # TUNE
+    # tune_binary(estimator)
+    # tune_multiclass(estimator)
 
 
 # Press the green button in the gutter to run the script.

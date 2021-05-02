@@ -1,3 +1,5 @@
+from pyspark.sql.types import StringType
+
 from src.Paths import ssl_reneg_dataset, arp_spoof_dataset, syn_dos_dataset, ssl_reneg_labels, arp_spoof_labels, \
     syn_dos_labels
 from src.SparkConfig import get_spark_session
@@ -8,17 +10,15 @@ spark = get_spark_session("outlier-detection")
 
 
 def load_dataset_with_categories():
-    df_ssl = load_data(ssl_reneg_dataset, ssl_reneg_labels, 'a')
-    # todo use the existing label other than labelling manually
-    # todo use string labels "ssl", "b"
-    # todo Use FE after setting benchmarks
-    df_arp = load_data(arp_spoof_dataset, arp_spoof_labels, 'b')
-    df_syn = load_data(syn_dos_dataset, syn_dos_labels, 'c')
+    df_ssl = load_data(ssl_reneg_dataset, ssl_reneg_labels, 1)
+    df_arp = load_data(arp_spoof_dataset, arp_spoof_labels, 2)
+    df_syn = load_data(syn_dos_dataset, syn_dos_labels, 3)
+    # df_syn = spark.createDataFrame([], StringType())
 
     # FIXME Remove
     df_arp, df_ssl, df_syn = limit_rows(df_arp, df_ssl, df_syn)
 
-    df = create_union([df_ssl, df_syn, df_arp])
+    df = create_union([df_ssl, df_arp, df_syn])
     return df
 
 
@@ -40,11 +40,3 @@ def create_union(dfs: list):
     for df in dfs:
         df_U = df_U.union(df)
     return df_U
-
-#
-# # Test
-if __name__ == '__main__':
-    df = load_dataset_with_categories()
-    df.printSchema()
-    df.show()
-    df.groupBy('label').count().orderBy('count', ascending=False).show()

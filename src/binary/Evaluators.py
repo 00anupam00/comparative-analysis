@@ -1,6 +1,8 @@
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
 from sklearn.metrics import confusion_matrix, accuracy_score, log_loss
 import neptunecontrib.monitoring.metrics as npt_metrics
+from scikitplot.metrics import plot_roc
+from matplotlib import pyplot as plt
 
 def evaluate_binary_classifier(tf_df):
     evaluator = BinaryClassificationEvaluator(
@@ -30,6 +32,24 @@ def metrics_sklearn(tf_df):
     tn, fp, fn, tp = cm.ravel()
     print("True Negative"
           ": %s \nFalse Positive: %s \nFalse Negative: %s \nTrue Positive: %s" %(tn, fp, fn, tp))
-    # plot_precision_recall(actual, predicted, ax=ax)
-    # log_loss(actual, predicted)
-    # npt_metrics.log_binary_classification_metrics(actual, predicted)
+    recall = calculate_recall(tp, fn)
+    precision = calculate_precision(tp, fp)
+    f_score = calculate_f_score(recall, precision)
+    print("Recall : %s \nPrecision: %s \n F_score: %s " %(recall, precision, f_score))
+    print("Plot of Area under ROC:")
+    plot_area_under_roc(actual, predicted)
+
+
+def calculate_recall(tp, fn):
+    return tp / (tp + fn)
+
+
+def calculate_precision(tp, fp):
+    return tp/(fp + tp)
+
+def calculate_f_score(recall, precision):
+    return (2 * recall * precision)/(recall + precision)
+
+def plot_area_under_roc(actual, predicted):
+    fig, ax = plt.subplots()
+    plot_roc(actual, predicted, ax=ax)
