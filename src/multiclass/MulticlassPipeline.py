@@ -2,7 +2,7 @@ from pyspark.ml import Pipeline
 from pyspark.ml.feature import VectorAssembler
 from pyspark.sql import dataframe
 
-from src.utils.Estimators import get_estimator_for_multiclass
+from src.utils.Estimators import get_estimator_for_multiclass, get_perceptron_estimator
 
 
 def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
@@ -12,17 +12,20 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
         handleInvalid="skip"
     )
 
+    algo = ()
+    if estimator.lower() == "perceptron":
+        features_col = len(assembler.getInputCols())
+        print("Number of features column: ", str(features_col))
+        algo = get_perceptron_estimator(features_col)
+    else:
+        algo = get_estimator_for_multiclass(estimator)
 
     # Split the data into training and test sets (30% held out for testing)
     (trainingData, testData) = df.randomSplit([0.7, 0.3])
 
-    # debug
-    trainingData.describe()
-    trainingData.printSchema()
+    # feature_selector =  get_selector("features", "label")
 
-    estimator = get_estimator_for_multiclass(estimator)
-
-    pipeline = Pipeline().setStages([assembler, estimator])
+    pipeline = Pipeline().setStages([assembler, algo])
     pipeline_model = pipeline.fit(trainingData)
 
     transformed_df = pipeline_model.transform(testData)
@@ -30,6 +33,6 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
     # print("Schema after transformation:")
     print("Transformed df:")
     transformed_df.printSchema()
-    # transformed_df.select("id", "prediction", "rawPrediction", "probability", "label").show(5)
+    transformed_df.select("id", "features", "prediction", "rawPrediction", "probability", "label").show(5)
 
     return transformed_df

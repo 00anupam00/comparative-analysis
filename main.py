@@ -14,10 +14,6 @@ from src.multiclass.Evaluators import evaluate_multiclass
 from src.multiclass.MulticlassPipeline import process_multiclass_pipeline
 from src.utils import Estimators
 
-
-# from src.cluster.KMeansPipeline import process_pipeline
-# from src.cluster.KmeansEvaluators import evaluate_KMeans
-
 def binaryClassify(estimator):
     # 1. Load and pre-process data
     # df = DataLoader.load_data(ssl_reneg_dataset, ssl_reneg_labels)
@@ -51,11 +47,13 @@ def tune_binary(estimator):
     evaluator = BinaryClassificationEvaluator(labelCol="label", rawPredictionCol="prediction")
     evaluate_with_train_validation_split(df, estimator, evaluator)
 
+
 def tune_multiclass(estimator):
     df = load_dataset_with_categories()
     df = df_with_id(df)
     evaluator = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction")
     evaluate_with_train_validation_split(df, estimator, evaluator)
+
 
 def run(argv):
     estimator = ''
@@ -70,12 +68,12 @@ def run(argv):
             print('main.py -e <estimators>')
             print('Estimators value could be one of: ', str(Estimators.get_estimator_keys()))
         elif opt in ['-e', '--estimator']:
-            estimator = arg
+            estimator = arg.strip()
 
     print("Selected Estimator is: ", estimator)
 
-    binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
-    # multiclassClassify(estimator=estimator)
+    # binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
+    multiclassClassify(estimator=estimator)
 
     # TUNE
     # tune_binary(estimator)

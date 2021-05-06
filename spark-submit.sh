@@ -1,9 +1,2 @@
-./bin/spark-submit \
---deploy-mode cluster \
---master https://kubernetes.docker.internal:6443 \
---conf spark.kubernetes.authenticate.driver.serviceAccountName=spark-sa \
---name spark-pi \
---class org.apache.spark.examples.SparkPi \
---conf spark.executor.instances=2  \
---conf spark.kubernetes.executor.container.image= 00anupam00/spark-py \
-local:///Users/anupamrakshit/Documents/workspace/outlier-detection/src/SimpleApp.py
+#spark-submit --deploy-mode cluster --master k8s://https://127.0.0.1:16443 --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark-sa --name spark-pi --class pi.py --conf spark.executor.instances=2  --conf spark.kubernetes.executor.container.image=00anupam00/spark-py /home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/examples/src/main/python/pi
+spark-submit   --master spark://172.17.65.44:7077   outlier-detection/main.py -erandom_forest

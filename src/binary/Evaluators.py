@@ -17,7 +17,6 @@ def evaluate_binary_classifier(tf_df):
     # Confusion Matrix
     tf_df.crosstab("prediction", "label").show(30, False)
     metrics_sklearn(tf_df)
-    # todo  precision, fscore
 
 
 # sklearn Metrics
