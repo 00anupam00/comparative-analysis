@@ -4,8 +4,7 @@ from pyspark.sql import dataframe
 
 def evaluate_multiclass(df: dataframe.DataFrame):
     # Select (prediction, true label) and compute test error
-    evaluator = MulticlassClassificationEvaluator(
-        labelCol="label", predictionCol="prediction")
+    evaluator = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction")
     accuracy = evaluator.evaluate(df, {evaluator.metricName: "accuracy"})
     weightedPrecision = evaluator.evaluate(df, {evaluator.metricName: "weightedPrecision"})
     weightedFMeasure = evaluator.evaluate(df, {evaluator.metricName: "weightedFMeasure"})
