@@ -24,10 +24,6 @@ def estimators_for_multiclass():
         'random_forest': RandomForestClassifier(labelCol="label", featuresCol="features", numTrees=10),
         'decision_tree': DecisionTreeClassifier(labelCol="label", featuresCol="features"),
         'gbt': GBTClassifier(labelCol="label", featuresCol="features"),  # only supports binary classification
-
-        ## extras
-        'nb': NaiveBayes(smoothing=1.0, modelType="multinomial"),  # requires non-negative features
-        "lsvc": LinearSVC(maxIter=10, regParam=0.1)  # only supports binary classification
     }
     return _estimators
 

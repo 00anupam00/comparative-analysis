@@ -6,7 +6,7 @@ from pyspark.ml.evaluation import BinaryClassificationEvaluator, MulticlassClass
 from src.Paths import syn_dos_labels, \
     syn_dos_dataset
 # from src.MulticlassPipeline import process_multiclass_pipeline
-from src.Tuning import evaluate_with_train_validation_split
+from src.Tuning import evaluate_with_train_validation_split, evaluate_with_cross_validation, get_pipeline
 from src.binary import Evaluators, BinaryPipeline
 from src.binary.DataLoader import load_data
 from src.multiclass.DataPreProcessor import load_dataset_with_categories, df_with_id
@@ -50,9 +50,9 @@ def tune_binary(estimator):
 
 def tune_multiclass(estimator):
     df = load_dataset_with_categories()
-    df = df_with_id(df)
-    evaluator = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction")
-    evaluate_with_train_validation_split(df, estimator, evaluator)
+    print("Tuning model: ", str(estimator))
+    evaluate_with_cross_validation(df, get_pipeline(df, estimator), estimator, MulticlassClassificationEvaluator())
+    evaluate_with_train_validation_split(df, estimator, get_pipeline(df, estimator), MulticlassClassificationEvaluator())
 
 
 def run(argv):
