@@ -1,0 +1,54 @@
+SYN_DoS_dataset-002.csv --------->>>>
+
+Selected Estimator is:  decision_tree
+Accuracy:  0.9993349124217548
+Test Error = 0.000665088
+Confusion Matrix: 
++----------------+-----+----+
+|prediction_label|0    |1   |
++----------------+-----+----+
+|1.0             |8    |4211|
+|0.0             |55464|5   |
++----------------+-----+----+
+SkLearn Metrics : 
+Accuracy (sklearn): 100.0%
+True Negative: 55458 
+False Positive: 14 
+False Negative: 13 
+True Positive: 4203
+
+Selected Estimator is:  random_forest
+Accuracy:  0.9995132679550044
+Test Error = 0.000486732
+Confusion Matrix: 
++----------------+-----+----+
+|prediction_label|0    |1   |
++----------------+-----+----+
+|1.0             |54   |4216|
+|0.0             |55418|0   |
++----------------+-----+----+
+SkLearn Metrics : 
+Accuracy (sklearn): 99.9%
+True Negative: 55447 
+False Positive: 25 
+False Negative: 10 
+True Positive: 4206
+
+
+
+Selected Estimator is:  gbt
+Accuracy:  0.9990616665453457
+Test Error = 0.000938333 
+Confusion Matrix:
++----------------+-----+----+
+|prediction_label|0    |1   |
++----------------+-----+----+
+|1.0             |12   |4209|
+|0.0             |55460|7   |
++----------------+-----+----+
+SkLearn Metrics : 
+Accuracy (sklearn): 100.0%
+True Negative: 55460 
+False Positive: 12 
+False Negative: 7 
+True Positive: 4209
