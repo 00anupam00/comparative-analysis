@@ -36,7 +36,7 @@ def metrics_sklearn(tf_df):
     f_score = calculate_f_score(recall, precision)
     print("Recall : %s \nPrecision: %s \n F_score: %s " %(recall, precision, f_score))
     print("Plot of Area under ROC:")
-    plot_area_under_roc(actual, predicted)
+    # plot_area_under_roc(actual, predicted)
 
 
 def calculate_recall(tp, fn):

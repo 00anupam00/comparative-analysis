@@ -26,13 +26,12 @@ def load_data(data_path, labels_path):
 
     # Pass through data pre-processor
     df = pre_process_data(df_data, df_labels)
+    # analyze_labels(df)
     return df
 
 
 def show(df):
     df.describe().show(25)
-    print("The last 10 lines of the dataset: ")
-    print(df.tail(10))
 
 
 def analyze_labels(df):

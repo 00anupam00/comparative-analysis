@@ -20,7 +20,7 @@ def binaryClassify(estimator):
     # df = DataLoader.load_data(arp_spoof_dataset, arp_spoof_labels)
     df = load_data(syn_dos_dataset, syn_dos_labels)
     # fixme 1.1 Limit the last 100000 records for preserving memory
-    # df = df.orderBy('id', ascending=False).limit(100000)
+    df = df.orderBy('id', ascending=False).limit(100000)
 
     # tf_df = Pipeline.create_pipeline(df)
     tf_df = BinaryPipeline.create_pipeline(df, estimator)
@@ -42,17 +42,11 @@ def multiclassClassify(estimator):
     evaluate_multiclass(tf_df)
 
 
-def tune_binary(estimator):
-    df = load_data(syn_dos_dataset, syn_dos_labels)
-    evaluator = BinaryClassificationEvaluator(labelCol="label", rawPredictionCol="prediction")
-    evaluate_with_train_validation_split(df, estimator, evaluator)
-
-
 def tune_multiclass(estimator):
     df = load_dataset_with_categories()
     print("Tuning model: ", str(estimator))
     evaluate_with_cross_validation(df, get_pipeline(df, estimator), estimator, MulticlassClassificationEvaluator())
-    evaluate_with_train_validation_split(df, estimator, get_pipeline(df, estimator), MulticlassClassificationEvaluator())
+    evaluate_with_train_validation_split(df, get_pipeline(df, estimator), estimator, MulticlassClassificationEvaluator())
 
 
 def run(argv):
@@ -72,11 +66,10 @@ def run(argv):
 
     print("Selected Estimator is: ", estimator)
 
-    # binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
-    multiclassClassify(estimator=estimator)
+    binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
+    # multiclassClassify(estimator=estimator)
 
     # TUNE
-    # tune_binary(estimator)
     # tune_multiclass(estimator)
 
 

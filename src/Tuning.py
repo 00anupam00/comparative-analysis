@@ -1,22 +1,18 @@
-from pyspark.ml import Estimator, Pipeline
-from pyspark.ml.evaluation import MulticlassClassificationEvaluator, BinaryClassificationEvaluator
+from pyspark.ml import Pipeline
 from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.tuning import ParamGridBuilder, TrainValidationSplit, CrossValidator
+from pyspark.ml.tuning import TrainValidationSplit, CrossValidator
 from pyspark.sql import dataframe
 
-from src.utils.Estimators import get_estimator, get_perceptron_estimator, get_estimator_for_multiclass
-from src.multiclass.DataPreProcessor import load_dataset_with_categories
+from src.binary import Evaluators
+from src.utils.Estimators import get_perceptron_estimator, get_estimator_for_multiclass
+from src.utils.HyperParamGrid import get_param_grid
 
 
 def evaluate_with_train_validation_split(df: dataframe.DataFrame, estimator, pipeline, evaluator):
+    print("Tuning with train validation split...")
     train, test = df.randomSplit([0.9, 0.1], seed=12345)
 
-    algorithm = get_estimator(estimator)
-    paramGrid = ParamGridBuilder() \
-        .addGrid(algorithm.numTrees, [5, 10, 20]) \
-        .addGrid(algorithm.maxDepth, [5, 10]) \
-        .addGrid(algorithm.cacheNodeIds, [True, False]) \
-        .build()
+    paramGrid = get_param_grid(estimator)
 
     tvs = TrainValidationSplit(estimator=pipeline,
                                estimatorParamMaps=paramGrid,
@@ -25,20 +21,18 @@ def evaluate_with_train_validation_split(df: dataframe.DataFrame, estimator, pip
                                trainRatio=0.8)
 
     model = tvs.fit(train)
-    prediction = model.transform(test).select("features", "label", "prediction")
-    print("from train validation split hyparam tuner:")
-    prediction.show(5)
+    print("Result of train validation split hyparam tuner:")
+    tf_df = model.transform(test)
+    # tf_df.select("features", "label", "prediction").show(5)
+    # binary evaluators
+    Evaluators.evaluate_binary_classifier(tf_df)
 
 
-def evaluate_with_cross_validation(df: dataframe.DataFrame, pipeline, estimator, evaluator):
+def evaluate_with_cross_validation(df: dataframe.DataFrame, estimator, pipeline, evaluator):
+    print("Tuning with cross validation...")
     train, test = df.randomSplit([0.9, 0.1], seed=12345)
 
-    algorithm = get_estimator(estimator)
-    paramGrid = ParamGridBuilder() \
-        .addGrid(algorithm.numTrees, [5, 10, 20]) \
-        .addGrid(algorithm.maxDepth, [5, 10]) \
-        .addGrid(algorithm.cacheNodeIds, [True, False]) \
-        .build()
+    paramGrid = get_param_grid(estimator)
 
     crossval = CrossValidator(estimator=pipeline,
                               estimatorParamMaps=paramGrid,
@@ -46,9 +40,11 @@ def evaluate_with_cross_validation(df: dataframe.DataFrame, pipeline, estimator,
                               numFolds=2)
 
     model = crossval.fit(train)
-    prediction = model.transform(test)
-    print("From cross validation hyperparameters selectors:")
-    prediction.show()
+    tf_df = model.transform(test)
+    print("Result of cross validation hyperparameters selectors:")
+    # tf_df.select("features", "label", "prediction").show(5).show()
+    # binary evaluators
+    Evaluators.evaluate_binary_classifier(tf_df)
 
 
 def get_pipeline(df, estimator):

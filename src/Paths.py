@@ -1,10 +1,10 @@
 
 
-ssl_reneg_dataset = "C:/Users/anraks/Documents/Thesis/outlier-detection/input/ssl_reneg/SSL_Renegotiation_dataset-002.csv"
-ssl_reneg_labels = "C:/Users/anraks/Documents/Thesis/outlier-detection/input/ssl_reneg/SSL_Renegotiation_labels.csv"
+ssl_reneg_dataset = "/Users/anupamrakshit/Google Drive/TalTech/Thesis/outlier-detection/input/ssl/dataset_min.csv"
+ssl_reneg_labels = "/Users/anupamrakshit/Google Drive/TalTech/Thesis/outlier-detection/input/ssl/labels_min.csv"
 
-arp_spoof_dataset = "C:/Users/anraks/Documents/Thesis/outlier-detection/input/arp_spoof/ARP MitM_dataset-002.csv"
-arp_spoof_labels = "C:/Users/anraks/Documents/Thesis/outlier-detection/input/arp_spoof/ARP MitM_labels.csv"
+arp_spoof_dataset = "/Users/anupamrakshit/Google Drive/TalTech/Thesis/outlier-detection/input/arp/dataset_min.csv"
+arp_spoof_labels = "/Users/anupamrakshit/Google Drive/TalTech/Thesis/outlier-detection/input/arp/labels_min.csv"
 
-syn_dos_dataset = "C:/Users/anraks/Documents/Thesis/outlier-detection/input/syn_dos/SYN_DoS_dataset-002.csv"
-syn_dos_labels = "C:/Users/anraks/Documents/Thesis/outlier-detection/input/syn_dos/SYN_DoS_labels.csv"
+syn_dos_dataset = "/Users/anupamrakshit/Google Drive/TalTech/Thesis/outlier-detection/input/syn/dataset_min.csv"
+syn_dos_labels = "/Users/anupamrakshit/Google Drive/TalTech/Thesis/outlier-detection/input/syn/labels_min.csv"
