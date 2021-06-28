@@ -4,6 +4,7 @@ from pyspark.ml.feature import VectorAssembler
 from pyspark.sql import dataframe
 
 from src.Tuning import evaluate_with_train_validation_split, get_pipeline, evaluate_with_cross_validation
+from src.binary import Evaluators
 from src.utils.Estimators import get_estimator
 
 
@@ -29,25 +30,25 @@ def create_pipeline(df: dataframe.DataFrame, estimator):
     pipeline = Pipeline(stages=[assembler, get_estimator(estimator)])
     # train
     train_model = pipeline.fit(train)
+    # make predictions
+    predictions = train_model.transform(test)
 
     # training summary
     # calculate_metrics(train_model.summary)
 
     # tune pipeline before fit
     print("Tuning binary pipeline...")
-    tune_binary(df, estimator, pipeline)
+    tune_binary(df, estimator)
 
-
-    # make predictions
-    predictions = train_model.transform(test)
-
-    # Shows the result.
     return predictions
 
 
-def tune_binary(df, estimator, pipeline):
+def tune_binary(df, estimator):
     evaluator = BinaryClassificationEvaluator(labelCol="label", rawPredictionCol="prediction")
     # validation split
-    evaluate_with_train_validation_split(df, estimator, pipeline, evaluator)
+    validationSplit_tdf = evaluate_with_train_validation_split(df, estimator, get_pipeline(df, estimator), evaluator)
+    Evaluators.evaluate_binary_classifier(validationSplit_tdf)
+
     # cross validation fit
-    evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
+    cross_valid_tdf = evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
+    Evaluators.evaluate_binary_classifier(cross_valid_tdf)

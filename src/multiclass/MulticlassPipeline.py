@@ -1,7 +1,9 @@
 from pyspark.ml import Pipeline
+from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 from pyspark.ml.feature import VectorAssembler
 from pyspark.sql import dataframe
 
+from src.Tuning import evaluate_with_cross_validation, evaluate_with_train_validation_split, get_pipeline
 from src.utils.Estimators import get_estimator_for_multiclass, get_perceptron_estimator
 
 
@@ -26,8 +28,11 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
     # feature_selector =  get_selector("features", "label")
 
     pipeline = Pipeline().setStages([assembler, algo])
-    pipeline_model = pipeline.fit(trainingData)
 
+    # Tune multiclass
+    tune_multiclass(df, estimator)
+
+    pipeline_model = pipeline.fit(trainingData)
     transformed_df = pipeline_model.transform(testData)
 
     # print("Schema after transformation:")
@@ -36,3 +41,10 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
     transformed_df.select("id", "features", "prediction", "rawPrediction", "probability", "label").show(5)
 
     return transformed_df
+
+
+def tune_multiclass(df, estimator):
+    print("Tuning model: ", str(estimator))
+    evaluator = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction")
+    evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
+    evaluate_with_train_validation_split(df,estimator, get_pipeline(df, estimator), evaluator)

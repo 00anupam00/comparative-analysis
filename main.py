@@ -42,11 +42,6 @@ def multiclassClassify(estimator):
     evaluate_multiclass(tf_df)
 
 
-def tune_multiclass(estimator):
-    df = load_dataset_with_categories()
-    print("Tuning model: ", str(estimator))
-    evaluate_with_cross_validation(df, get_pipeline(df, estimator), estimator, MulticlassClassificationEvaluator())
-    evaluate_with_train_validation_split(df, get_pipeline(df, estimator), estimator, MulticlassClassificationEvaluator())
 
 
 def run(argv):
@@ -66,11 +61,8 @@ def run(argv):
 
     print("Selected Estimator is: ", estimator)
 
-    binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
-    # multiclassClassify(estimator=estimator)
-
-    # TUNE
-    # tune_multiclass(estimator)
+    # binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
+    multiclassClassify(estimator=estimator)
 
 
 # Press the green button in the gutter to run the script.
