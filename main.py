@@ -15,18 +15,23 @@ from src.multiclass.MulticlassPipeline import process_multiclass_pipeline
 from src.utils import Estimators
 
 def binaryClassify(estimator):
-    # 1. Load and pre-process data
-    # df = DataLoader.load_data(ssl_reneg_dataset, ssl_reneg_labels)
-    # df = DataLoader.load_data(arp_spoof_dataset, arp_spoof_labels)
+    print("Binary Classification... ")
     df = load_data(syn_dos_dataset, syn_dos_labels)
     # fixme 1.1 Limit the last 100000 records for preserving memory
     df = df.orderBy('id', ascending=False).limit(100000)
 
     # tf_df = Pipeline.create_pipeline(df)
-    tf_df = BinaryPipeline.create_pipeline(df, estimator)
+    tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator)
 
     # Evaluator
+    print("Metrics for estimator: ", str(estimator))
+    print("Metrics for default params: ")
     Evaluators.evaluate_binary_classifier(tf_df)
+
+    print("Metrics for hyper params tuned with cross validation: ")
+    Evaluators.evaluate_binary_classifier(tdf_cross)
+    print("Metrics for hyper params tuned with train validation split: ")
+    Evaluators.evaluate_binary_classifier(tdf_train)
 
     # FIXME
     # Visualize
@@ -35,11 +40,17 @@ def binaryClassify(estimator):
 
 
 def multiclassClassify(estimator):
+    print("Multiclass Classification... ")
     df = load_dataset_with_categories()
     df = df_with_id(df)
-    tf_df = process_multiclass_pipeline(df, estimator=estimator)
+    tf_df, tdf_cross, tdf_train = process_multiclass_pipeline(df, estimator=estimator)
     print("Metrics for Estimator: ", str(estimator))
+    print("Metrics for default params: ")
     evaluate_multiclass(tf_df)
+    print("Metrics for hyper params tuned with cross validation: ")
+    evaluate_multiclass(tdf_cross)
+    print("Metrics for hyper params tuned with train validation split: ")
+    evaluate_multiclass(tdf_train)
 
 
 
@@ -61,8 +72,8 @@ def run(argv):
 
     print("Selected Estimator is: ", estimator)
 
-    # binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
-    multiclassClassify(estimator=estimator)
+    binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
+    # multiclassClassify(estimator=estimator)
 
 
 # Press the green button in the gutter to run the script.

@@ -30,7 +30,7 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
     pipeline = Pipeline().setStages([assembler, algo])
 
     # Tune multiclass
-    tune_multiclass(df, estimator)
+    tdf_cross, tdf_train = tune_multiclass(df, estimator)
 
     pipeline_model = pipeline.fit(trainingData)
     transformed_df = pipeline_model.transform(testData)
@@ -40,11 +40,12 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
     transformed_df.printSchema()
     transformed_df.select("id", "features", "prediction", "rawPrediction", "probability", "label").show(5)
 
-    return transformed_df
+    return transformed_df, tdf_cross, tdf_train
 
 
 def tune_multiclass(df, estimator):
     print("Tuning model: ", str(estimator))
     evaluator = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction")
-    evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
-    evaluate_with_train_validation_split(df,estimator, get_pipeline(df, estimator), evaluator)
+    tdf_cross = evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
+    tdf_train = evaluate_with_train_validation_split(df,estimator, get_pipeline(df, estimator), evaluator)
+    return tdf_cross, tdf_train

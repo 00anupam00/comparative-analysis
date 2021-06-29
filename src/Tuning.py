@@ -3,8 +3,7 @@ from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.tuning import TrainValidationSplit, CrossValidator
 from pyspark.sql import dataframe
 
-from src.binary import Evaluators
-from src.utils.Estimators import get_perceptron_estimator, get_estimator_for_multiclass, get_estimator
+from src.utils.Estimators import get_perceptron_estimator, get_estimator
 from src.utils.HyperParamGrid import get_param_grid
 
 
@@ -21,7 +20,6 @@ def evaluate_with_train_validation_split(df: dataframe.DataFrame, estimator, pip
                                trainRatio=0.8)
 
     model = tvs.fit(train)
-    print("Result of train validation split hyparam tuner:")
     tf_df = model.transform(test)
     # tf_df.select("features", "label", "prediction").show(5)
 
@@ -41,7 +39,6 @@ def evaluate_with_cross_validation(df: dataframe.DataFrame, estimator, pipeline,
 
     model = crossval.fit(train)
     tf_df = model.transform(test)
-    print("Result of cross validation hyperparameters selectors:")
     # tf_df.select("features", "label", "prediction").show(5).show()
 
     return tf_df
