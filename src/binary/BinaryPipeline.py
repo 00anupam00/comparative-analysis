@@ -1,6 +1,7 @@
 from pyspark.ml import Pipeline
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
 from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.feature import PCA
 from pyspark.sql import dataframe
 
 from src.Tuning import evaluate_with_train_validation_split, get_pipeline, evaluate_with_cross_validation
@@ -22,11 +23,14 @@ def calculate_metrics(trainingSummary):
 def process_binary_pipeline(df: dataframe.DataFrame, estimator):
     assembler = VectorAssembler(
         inputCols=[x for x in df.columns if x != "label"],
-        outputCol="features"
+        outputCol="features_v"
     )
+
+    # PCA
+    pca = PCA(k=23, inputCol="features_v", outputCol="features")
     test, train = df.randomSplit([0.6, 0.4], seed=12345)
 
-    pipeline = Pipeline(stages=[assembler, get_estimator(estimator)])
+    pipeline = Pipeline(stages=[assembler, pca, get_estimator(estimator)])
     # train
     train_model = pipeline.fit(train)
     # make predictions
@@ -38,7 +42,7 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
     # tune pipeline before fit
     print("Tuning binary pipeline...")
     tdf_cross, tdf_train = tune_binary(df, estimator)
-
+    # 
     return tf_df, tdf_cross, tdf_train
 
 

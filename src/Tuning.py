@@ -1,5 +1,5 @@
 from pyspark.ml import Pipeline
-from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.feature import VectorAssembler, PCA
 from pyspark.ml.tuning import TrainValidationSplit, CrossValidator
 from pyspark.sql import dataframe
 
@@ -47,9 +47,12 @@ def evaluate_with_cross_validation(df: dataframe.DataFrame, estimator, pipeline,
 def get_pipeline(df, estimator):
     assembler = VectorAssembler(
         inputCols=[x for x in df.columns if x != "label"],
-        outputCol="features",
+        outputCol="features_v",
         handleInvalid="skip"
     )
+    
+    pca = PCA(k=23, inputCol="features_v", outputCol="features")
+    
     algo = ()
     if estimator.lower() == "perceptron":
         features_col = len(assembler.getInputCols())
@@ -57,7 +60,7 @@ def get_pipeline(df, estimator):
         algo = get_perceptron_estimator(features_col)
     else:
         algo = get_estimator(estimator)
-    return Pipeline().setStages([assembler, algo])
+    return Pipeline().setStages([assembler, pca, algo])
 
 #
 # if __name__ == '__main__':
