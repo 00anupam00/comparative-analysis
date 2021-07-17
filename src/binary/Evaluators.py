@@ -4,6 +4,7 @@ import neptunecontrib.monitoring.metrics as npt_metrics
 from scikitplot.metrics import plot_roc
 from matplotlib import pyplot as plt
 
+
 def evaluate_binary_classifier(tf_df):
     evaluator = BinaryClassificationEvaluator(
         labelCol="label", rawPredictionCol="prediction")
@@ -21,10 +22,11 @@ def evaluate_binary_classifier(tf_df):
 
 # sklearn Metrics
 def metrics_sklearn(tf_df):
+    print("\nMetrics from sklearn:")
     actual = tf_df.select('label').toPandas()
     predicted = tf_df.select('prediction').toPandas()
     acc = round(accuracy_score(actual, predicted), 3) * 100
-    print("Accuracy (sklearn): {}%".format(acc))
+    print("Accuracy: {}%".format(acc))
     print("Confusion Matrix: ")
     cm = confusion_matrix(actual, predicted)
     cm.ravel()

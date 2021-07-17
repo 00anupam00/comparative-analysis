@@ -14,10 +14,10 @@ from src.multiclass.Evaluators import evaluate_multiclass
 from src.multiclass.MulticlassPipeline import process_multiclass_pipeline
 from src.utils import Estimators
 
+
 def binaryClassify(estimator):
     print("Binary Classification... ")
     df = load_data(syn_dos_dataset, syn_dos_labels)
-    # fixme 1.1 Limit the last 100000 records for preserving memory
     df = df.orderBy('id', ascending=False) #.limit(100000)
 
     # tf_df = Pipeline.create_pipeline(df)
@@ -33,11 +33,6 @@ def binaryClassify(estimator):
     print("Evaluation results for hyper params tuned with train validation split: ")
     Evaluators.evaluate_binary_classifier(tdf_train)
 
-    # FIXME
-    # Visualize
-    tf_df.printSchema()
-    # Visualization.visualize_data(tf_df)
-
 
 def multiclassClassify(estimator):
     print("Multiclass Classification... ")
@@ -51,8 +46,6 @@ def multiclassClassify(estimator):
     evaluate_multiclass(tdf_cross)
     print("Evaluation results for hyper params tuned with train validation split: ")
     evaluate_multiclass(tdf_train)
-
-
 
 
 def run(argv):
