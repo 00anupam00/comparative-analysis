@@ -33,6 +33,7 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
     pipeline = Pipeline(stages=[assembler, pca, get_estimator(estimator)])
     # train
     train_model = pipeline.fit(train)
+    train_model.write().overwrite().save("models/binary/"+estimator+"/base_model")
     # make predictions
     tf_df = train_model.transform(test)
 
@@ -49,9 +50,11 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
 def tune_binary(df, estimator):
     evaluator = BinaryClassificationEvaluator(labelCol="label", rawPredictionCol="prediction")
     # validation split
-    validationSplit_tdf = evaluate_with_train_validation_split(df, estimator, get_pipeline(df, estimator), evaluator)
+    model, validationSplit_tdf = evaluate_with_train_validation_split(df, estimator, get_pipeline(df, estimator), evaluator)
+    model.write().overwrite().save("models/binary/"+estimator+"/train_validation")
 
     # cross validation fit
-    cross_valid_tdf = evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
+    model, cross_valid_tdf = evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
+    model.write().overwrite().save("models/binary/"+estimator+"/cross_validation")
 
     return cross_valid_tdf, validationSplit_tdf

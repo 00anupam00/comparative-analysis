@@ -23,7 +23,7 @@ def evaluate_with_train_validation_split(df: dataframe.DataFrame, estimator, pip
     tf_df = model.transform(test)
     # tf_df.select("features", "label", "prediction").show(5)
 
-    return tf_df
+    return model.bestModel, tf_df
 
 
 def evaluate_with_cross_validation(df: dataframe.DataFrame, estimator, pipeline, evaluator):
@@ -41,7 +41,7 @@ def evaluate_with_cross_validation(df: dataframe.DataFrame, estimator, pipeline,
     tf_df = model.transform(test)
     # tf_df.select("features", "label", "prediction").show(5).show()
 
-    return tf_df
+    return model.bestModel, tf_df
 
 
 def get_pipeline(df, estimator):

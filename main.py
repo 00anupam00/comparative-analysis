@@ -57,10 +57,11 @@ def multiclassClassify(estimator):
 
 def run(argv):
     estimator = ''
+    mode = ''
     try:
-        opts, args = getopt.getopt(argv, "he:", ["estimator="])
+        opts, args = getopt.getopt(argv, "he:m:", ["estimator=", "mode="])
     except getopt.GetoptError:
-        print('main.py -e <estimators>')
+        print('main.py -e <estimators> -m <binary|multiclass>')
         print('Estimators value could be one of: ', str(Estimators.get_estimator_keys()))
         sys.exit(2)
     for opt, arg in opts:
@@ -69,11 +70,15 @@ def run(argv):
             print('Estimators value could be one of: ', str(Estimators.get_estimator_keys()))
         elif opt in ['-e', '--estimator']:
             estimator = arg.strip()
+        elif opt in ['-m', '--mode']:
+            mode = arg.strip()
 
     print("Selected Estimator is: ", estimator)
 
-    # binaryClassify(estimator=estimator)  # todo uncomment for binary classifiers
-    multiclassClassify(estimator=estimator)
+    if "binary" == mode:
+        binaryClassify(estimator=estimator)
+    elif "multiclass" == mode:
+        multiclassClassify(estimator=estimator)
 
 
 # Press the green button in the gutter to run the script.
