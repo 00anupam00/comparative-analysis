@@ -31,9 +31,11 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
     test, train = df.randomSplit([0.6, 0.4], seed=12345)
 
     pipeline = Pipeline(stages=[assembler, pca, get_estimator(estimator)])
-    # train
+
+    print("Training model ...")
     train_model = pipeline.fit(train)
     train_model.write().overwrite().save("models/binary/"+estimator+"/base_model")
+    print("Training complete. The base model is saved in 'models/binary/*'.")
     # make predictions
     tf_df = train_model.transform(test)
 
@@ -43,7 +45,6 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
     # tune pipeline before fit
     print("Tuning binary pipeline...")
     tdf_cross, tdf_train = tune_binary(df, estimator)
-    # 
     return tf_df, tdf_cross, tdf_train
 
 
@@ -56,5 +57,7 @@ def tune_binary(df, estimator):
     # cross validation fit
     model, cross_valid_tdf = evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
     model.write().overwrite().save("models/binary/"+estimator+"/cross_validation")
+
+    print("The best models are saved in 'models/binary/*'.")
 
     return cross_valid_tdf, validationSplit_tdf

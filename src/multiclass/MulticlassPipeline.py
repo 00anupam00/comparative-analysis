@@ -33,13 +33,15 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
     # Tune multiclass
     tdf_cross, tdf_train = tune_multiclass(df, estimator)
 
+    print("Training model ...")
     pipeline_model = pipeline.fit(trainingData)
     pipeline_model.write().overwrite().save("models/multiclass/"+estimator+"/base_model")
+    print("Training complete. Base model saved in 'models/multiclass/*'")
 
     transformed_df = pipeline_model.transform(testData)
 
-    print("Transformed df:")
-    transformed_df.select("id", "features", "prediction", "rawPrediction", "probability", "label").show(5)
+    # print("Transformed df:")
+    # transformed_df.select("id", "features", "prediction", "rawPrediction", "probability", "label").show(5)
 
     return transformed_df, tdf_cross, tdf_train
 
@@ -51,4 +53,5 @@ def tune_multiclass(df, estimator):
     model.write().overwrite().save("models/multiclass/"+estimator+"/cross_validation")
     model, tdf_train = evaluate_with_train_validation_split(df,estimator, get_pipeline(df, estimator), evaluator)
     model.write().overwrite().save("models/multiclass/"+estimator+"/train_validation")
+    print("The best models are saved in 'models/multiclass/*'.")
     return tdf_cross, tdf_train
