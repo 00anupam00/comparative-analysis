@@ -18,7 +18,7 @@ def binaryClassify(estimator):
     print("Binary Classification... ")
     df = load_data(syn_dos_dataset, syn_dos_labels)
     # fixme 1.1 Limit the last 100000 records for preserving memory
-    df = df.orderBy('id', ascending=False).limit(100000)
+    df = df.orderBy('id', ascending=False) #.limit(100000)
 
     # tf_df = Pipeline.create_pipeline(df)
     tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator)
