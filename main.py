@@ -1,5 +1,6 @@
 import getopt
 import sys
+from datetime import datetime
 
 from pyspark.ml.evaluation import BinaryClassificationEvaluator, MulticlassClassificationEvaluator
 
@@ -49,6 +50,8 @@ def multiclassClassify(estimator):
 
 
 def run(argv):
+    startTime = datetime.now()
+    print("Application started at : ", startTime)
     estimator = ''
     mode = ''
     try:
@@ -66,12 +69,17 @@ def run(argv):
         elif opt in ['-m', '--mode']:
             mode = arg.strip()
 
-    print("Selected Estimator is: ", estimator)
+    print("\nSelected Estimator is: ", estimator)
 
     if "binary" == mode:
         binaryClassify(estimator=estimator)
     elif "multiclass" == mode:
         multiclassClassify(estimator=estimator)
+
+    endTime = datetime.now()
+    print("\nApplication finished at : ", endTime)
+    print("Total time taken to process: ", str(endTime - startTime))
+
 
 
 # Press the green button in the gutter to run the script.
