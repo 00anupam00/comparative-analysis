@@ -61,10 +61,3 @@ def get_pipeline(df, estimator):
     else:
         algo = get_estimator(estimator)
     return Pipeline().setStages([assembler, pca, algo])
-
-#
-# if __name__ == '__main__':
-#     df = load_dataset_with_categories()
-#     estimator = "random_forest"
-#     evaluate_with_cross_validation(df, get_pipeline(estimator), estimator, MulticlassClassificationEvaluator())
-#     evaluate_with_train_validation_split(df, estimator, get_pipeline(estimator), MulticlassClassificationEvaluator())

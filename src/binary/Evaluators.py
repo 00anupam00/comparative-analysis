@@ -25,7 +25,7 @@ def metrics_sklearn(tf_df):
     print("\nMetrics from sklearn:")
     actual = tf_df.select('label').toPandas()
     predicted = tf_df.select('prediction').toPandas()
-    acc = round(accuracy_score(actual, predicted), 3) * 100
+    acc = round(accuracy_score(actual, predicted), 9) * 100
     print("Accuracy: {}%".format(acc))
     print("Confusion Matrix: ")
     cm = confusion_matrix(actual, predicted)
@@ -37,8 +37,6 @@ def metrics_sklearn(tf_df):
     precision = calculate_precision(tp, fp)
     f_score = calculate_f_score(recall, precision)
     print("Recall : %s \nPrecision: %s \n F_score: %s " %(recall, precision, f_score))
-    print("Plot of Area under ROC:")
-    # plot_area_under_roc(actual, predicted)
 
 
 def calculate_recall(tp, fn):

@@ -24,13 +24,13 @@ def binaryClassify(estimator):
     tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator)
 
     # Evaluator
-    print("Evaluating estimator: ", str(estimator))
+    print("\nEvaluating estimator: ", str(estimator))
     print("Evaluation results with default params: ")
     Evaluators.evaluate_binary_classifier(tf_df)
 
-    print("Evaluation results for hyper params tuned with cross validation: ")
+    print("\nEvaluation results for hyper params tuned with cross validation: ")
     Evaluators.evaluate_binary_classifier(tdf_cross)
-    print("Evaluation results for hyper params tuned with train validation split: ")
+    print("\nEvaluation results for hyper params tuned with train validation split: ")
     Evaluators.evaluate_binary_classifier(tdf_train)
 
 
@@ -39,12 +39,12 @@ def multiclassClassify(estimator):
     df = load_dataset_with_categories()
     df = df_with_id(df)
     tf_df, tdf_cross, tdf_train = process_multiclass_pipeline(df, estimator=estimator)
-    print("Evaluating Estimator: ", str(estimator))
+    print("\nEvaluating Estimator: ", str(estimator))
     print("Evaluation results with default params: ")
     evaluate_multiclass(tf_df)
-    print("Evaluation results for hyper params tuned with cross validation: ")
+    print("\nEvaluation results for hyper params tuned with cross validation: ")
     evaluate_multiclass(tdf_cross)
-    print("Evaluation results for hyper params tuned with train validation split: ")
+    print("\nEvaluation results for hyper params tuned with train validation split: ")
     evaluate_multiclass(tdf_train)
 
 
