@@ -2,12 +2,8 @@ import getopt
 import sys
 from datetime import datetime
 
-from pyspark.ml.evaluation import BinaryClassificationEvaluator, MulticlassClassificationEvaluator
-
 from src.Paths import syn_dos_labels, \
     syn_dos_dataset
-# from src.MulticlassPipeline import process_multiclass_pipeline
-from src.Tuning import evaluate_with_train_validation_split, evaluate_with_cross_validation, get_pipeline
 from src.binary import Evaluators, BinaryPipeline
 from src.binary.DataLoader import load_data
 from src.multiclass.DataPreProcessor import load_dataset_with_categories, df_with_id
@@ -21,7 +17,6 @@ def binaryClassify(estimator):
     df = load_data(syn_dos_dataset, syn_dos_labels)
     df = df.orderBy('id', ascending=False) #.limit(100000)
 
-    # tf_df = Pipeline.create_pipeline(df)
     tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator)
 
     # Evaluator

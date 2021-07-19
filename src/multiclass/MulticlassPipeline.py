@@ -19,7 +19,8 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
 
     algo = ()
     if estimator.lower() == "perceptron":
-        features_col = len(assembler.getInputCols())
+        # features_col = len(assembler.getInputCols())
+        features_col = pca.getK()
         print("Number of features column: ", str(features_col))
         algo = get_perceptron_estimator(features_col)
     else:

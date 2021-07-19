@@ -31,6 +31,6 @@ def get_estimator_for_multiclass(key):
 
 
 def get_perceptron_estimator(length_of_features):
-    layers = [length_of_features, 5, 4, 3]
+    layers = [length_of_features, 5, 4, 4]
     return MultilayerPerceptronClassifier(labelCol='label', featuresCol='features', maxIter=100,
                                           layers=layers, blockSize=128, seed=1234)
