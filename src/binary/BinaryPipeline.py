@@ -6,6 +6,7 @@ from pyspark.sql import dataframe
 
 from src.Tuning import evaluate_with_train_validation_split, get_pipeline, evaluate_with_cross_validation
 from src.utils.Estimators import get_estimator
+from src.utils.PrincipalComponents import get_k
 
 
 def calculate_metrics(trainingSummary):
@@ -27,7 +28,10 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
     )
 
     # PCA
-    pca = PCA(k=23, inputCol="features_v", outputCol="features")
+    pca = PCA(k=get_k(), inputCol="features_v", outputCol="features")
+    pca.explainParams()
+    pca.extractParamMap()
+    pca.getOutputCol()
     test, train = df.randomSplit([0.6, 0.4], seed=12345)
 
     pipeline = Pipeline(stages=[assembler, pca, get_estimator(estimator)])

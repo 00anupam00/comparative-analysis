@@ -5,6 +5,7 @@ from pyspark.sql import dataframe
 
 from src.utils.Estimators import get_perceptron_estimator, get_estimator
 from src.utils.HyperParamGrid import get_param_grid
+from src.utils.PrincipalComponents import get_k
 
 
 def evaluate_with_train_validation_split(df: dataframe.DataFrame, estimator, pipeline, evaluator):
@@ -51,7 +52,7 @@ def get_pipeline(df, estimator):
         handleInvalid="skip"
     )
     
-    pca = PCA(k=23, inputCol="features_v", outputCol="features")
+    pca = PCA(k=get_k(), inputCol="features_v", outputCol="features")
     
     algo = ()
     if estimator.lower() == "perceptron":

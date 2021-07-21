@@ -5,6 +5,7 @@ from pyspark.sql import dataframe
 
 from src.Tuning import evaluate_with_cross_validation, evaluate_with_train_validation_split, get_pipeline
 from src.utils.Estimators import get_estimator_for_multiclass, get_perceptron_estimator
+from src.utils.PrincipalComponents import get_k
 
 
 def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
@@ -15,7 +16,7 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
     )
 
     # PCA
-    pca = PCA(k=23, inputCol="features_v", outputCol="features")
+    pca = PCA(k=get_k(), inputCol="features_v", outputCol="features")
 
     algo = ()
     if estimator.lower() == "perceptron":
