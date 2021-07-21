@@ -32,7 +32,7 @@ def get_param_grid(estimator):
         algorithm = MultilayerPerceptronClassifier(labelCol='label', featuresCol='features', maxIter=100,
                                           layers=layers, blockSize=128, seed=1234)
         return ParamGridBuilder() \
-            .addGrid(algorithm.maxIter, [75, 125, 150]) \
-            .addGrid(algorithm.blockSize, [150]) \
-            .addGrid(algorithm.layers, [[23, 10, 7, 4], [23, 15, 10, 4]]) \
+            .addGrid(algorithm.maxIter, [75]) \
+            .addGrid(algorithm.blockSize, [150, 200]) \
+            .addGrid(algorithm.layers, [[23, 15, 10, 4]]) \
             .build()
