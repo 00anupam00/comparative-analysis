@@ -28,11 +28,11 @@ def get_param_grid(estimator):
             .addGrid(algorithm.cacheNodeIds, [True, False]) \
             .build()
     elif estimator == "perceptron":
-        layers = [23, 5, 4, 4]
+        layers = [23, 10, 6, 4]
         algorithm = MultilayerPerceptronClassifier(labelCol='label', featuresCol='features', maxIter=100,
                                           layers=layers, blockSize=128, seed=1234)
         return ParamGridBuilder() \
-            .addGrid(algorithm.maxIter, [20, 30, 50, 75]) \
-            .addGrid(algorithm.blockSize, [128, 150, 200]) \
-            .addGrid(algorithm.layers, [[23, 5, 4, 4], [23, 10, 7, 4], [23, 15, 10, 4]]) \
+            .addGrid(algorithm.maxIter, [75]) \
+            .addGrid(algorithm.blockSize, [150, 200]) \
+            .addGrid(algorithm.layers, [[23, 15, 10, 4]]) \
             .build()
