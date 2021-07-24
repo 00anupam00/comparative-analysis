@@ -29,9 +29,6 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
 
     # PCA
     pca = PCA(k=get_k(), inputCol="features_v", outputCol="features")
-    pca.explainParams()
-    pca.extractParamMap()
-    pca.getOutputCol()
     test, train = df.randomSplit([0.6, 0.4], seed=12345)
 
     pipeline = Pipeline(stages=[assembler, pca, get_estimator(estimator)])

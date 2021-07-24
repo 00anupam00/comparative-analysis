@@ -3,7 +3,7 @@ import sys
 from datetime import datetime
 
 from src.Paths import syn_dos_labels, \
-    syn_dos_dataset
+    syn_dos_dataset, arp_spoof_dataset, arp_spoof_labels, ssl_reneg_dataset, ssl_reneg_labels
 from src.binary import Evaluators, BinaryPipeline
 from src.binary.DataLoader import load_data
 from src.multiclass.DataPreProcessor import load_dataset_with_categories, df_with_id
@@ -14,8 +14,16 @@ from src.utils import Estimators
 
 def binaryClassify(estimator):
     print("Binary Classification... ")
+    # load syn dos
     df = load_data(syn_dos_dataset, syn_dos_labels)
-    df = df.orderBy('id', ascending=False) #.limit(100000)
+
+    # load ssl_reneg dataset
+    # df = load_data(ssl_reneg_dataset, ssl_reneg_labels)
+
+    # load arp dataset
+    # df = load_data(arp_spoof_dataset, arp_spoof_labels)
+
+    df = df.orderBy('id', ascending=False).limit(100000)
 
     tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator)
 

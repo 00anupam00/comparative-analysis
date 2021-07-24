@@ -10,7 +10,7 @@ def load_data(data_path, labels_path):
     df_data = spark.read.load(
         data_path,
         format="csv", sep=",", inferSchema="true", header="false")
-    print("Loaded dataset. ")
+    print("Loaded dataset: " + data_path)
 
     labels_schema = StructType([StructField("id", LongType(), False),
                                 StructField("label", IntegerType(), False)])

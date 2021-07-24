@@ -15,9 +15,6 @@ def load_dataset_with_categories():
     df_syn = load_data(syn_dos_dataset, syn_dos_labels, 3)
     # df_syn = spark.createDataFrame([], StringType())
 
-    # FIXME Remove
-    # df_arp, df_ssl, df_syn = limit_rows(df_arp, df_ssl, df_syn)
-
     df = create_union([df_ssl, df_arp, df_syn])
     return df
 
