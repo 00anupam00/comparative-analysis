@@ -23,7 +23,7 @@ def binaryClassify(estimator):
     # load arp dataset
     # df = load_data(arp_spoof_dataset, arp_spoof_labels)
 
-    df = df.orderBy('id', ascending=False).limit(100000)
+    df = df.orderBy('id', ascending=False)
 
     tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator)
 
