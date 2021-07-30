@@ -13,7 +13,6 @@ def load_dataset_with_categories():
     df_ssl = load_data(ssl_reneg_dataset, ssl_reneg_labels, 1)
     df_arp = load_data(arp_spoof_dataset, arp_spoof_labels, 2)
     df_syn = load_data(syn_dos_dataset, syn_dos_labels, 3)
-    # df_syn = spark.createDataFrame([], StringType())
 
     df = create_union([df_ssl, df_arp, df_syn])
     return df

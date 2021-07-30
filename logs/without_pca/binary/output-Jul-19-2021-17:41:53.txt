@@ -1,0 +1,85 @@
+Application started at :  2021-07-19 17:42:04.008358
+
+Selected Estimator is:  random_forest
+Binary Classification... 
+Loaded dataset. 
+Loaded labels. 
+Training model ...
+Training complete. The base model is saved in 'models/binary/*'.
+Tuning binary pipeline...
+Tuning with train validation split...
+Tuning with cross validation...
+The best models are saved in 'models/binary/*'.
+
+Evaluating estimator:  random_forest
+Evaluation results with default params: 
+areaUnderROC:  0.9153123450067914
+Accuracy:  0.9153123450067914
+Test Error = 0.0846877 
++----------------+-------+----+
+|prediction_label|0      |1   |
++----------------+-------+----+
+|1.0             |2      |3477|
+|0.0             |1658607|709 |
++----------------+-------+----+
+
+
+Metrics from sklearn:
+Accuracy: 99.9572407%
+Confusion Matrix: 
+True Negative: 1658607 
+False Positive: 2 
+False Negative: 709 
+True Positive: 3477
+Recall : 0.8306258958432872 
+Precision: 0.9994251221615407 
+ F_score: 0.9072407045009785 
+
+Evaluation results for hyper params tuned with cross validation: 
+areaUnderROC:  0.8361344537815126
+Accuracy:  0.8361344537815126
+Test Error = 0.163866 
++----------------+------+---+
+|prediction_label|0     |1  |
++----------------+------+---+
+|1.0             |0     |480|
+|0.0             |276754|234|
++----------------+------+---+
+
+
+Metrics from sklearn:
+Accuracy: 99.915666%
+Confusion Matrix: 
+True Negative: 276754 
+False Positive: 0 
+False Negative: 234 
+True Positive: 480
+Recall : 0.6722689075630253 
+Precision: 1.0 
+ F_score: 0.8040201005025126 
+
+Evaluation results for hyper params tuned with train validation split: 
+areaUnderROC:  0.8361344537815126
+Accuracy:  0.8361344537815126
+Test Error = 0.163866 
++----------------+------+---+
+|prediction_label|0     |1  |
++----------------+------+---+
+|1.0             |0     |480|
+|0.0             |276754|234|
++----------------+------+---+
+
+
+Metrics from sklearn:
+Accuracy: 99.915666%
+Confusion Matrix: 
+True Negative: 276754 
+False Positive: 0 
+False Negative: 234 
+True Positive: 480
+Recall : 0.6722689075630253 
+Precision: 1.0 
+ F_score: 0.8040201005025126 
+
+Application finished at :  2021-07-19 18:08:37.411597
+Total time taken to process:  0:26:33.403239

@@ -1,0 +1,85 @@
+Application started at :  2021-07-29 21:45:34.008157
+
+Selected Estimator is:  gbt
+Binary Classification... 
+Loaded dataset: /home/ubuntu/outlier-detection/input/syn/dataset.csv
+Loaded labels. 
+Training model ...
+Training complete. The base model is saved in 'models/binary/*'.
+Tuning binary pipeline...
+Tuning with train validation split...
+Tuning with cross validation...
+The best models are saved in 'models/binary/*'.
+
+Evaluating estimator:  gbt
+Evaluation results with default params: 
+areaUnderROC:  0.9991982894835502
+Accuracy:  0.9991982894835502
+Test Error = 0.000801711 
++----------------+-----+----+
+|prediction_label|0    |1   |
++----------------+-----+----+
+|1.0             |10   |4210|
+|0.0             |55462|6   |
++----------------+-----+----+
+
+
+Metrics from sklearn:
+Accuracy: 99.9731939%
+Confusion Matrix: 
+True Negative: 55462 
+False Positive: 10 
+False Negative: 6 
+True Positive: 4210
+Recall : 0.9985768500948766 
+Precision: 0.9976303317535545 
+ F_score: 0.9981033665244192 
+
+Evaluation results for hyper params tuned with cross validation: 
+areaUnderROC:  1.0
+Accuracy:  1.0
+Test Error = 0 
++----------------+----+---+
+|prediction_label|0   |1  |
++----------------+----+---+
+|1.0             |0   |712|
+|0.0             |9277|0  |
++----------------+----+---+
+
+
+Metrics from sklearn:
+Accuracy: 100.0%
+Confusion Matrix: 
+True Negative: 9277 
+False Positive: 0 
+False Negative: 0 
+True Positive: 712
+Recall : 1.0 
+Precision: 1.0 
+ F_score: 1.0 
+
+Evaluation results for hyper params tuned with train validation split: 
+areaUnderROC:  1.0
+Accuracy:  1.0
+Test Error = 0 
++----------------+----+---+
+|prediction_label|0   |1  |
++----------------+----+---+
+|1.0             |0   |712|
+|0.0             |9277|0  |
++----------------+----+---+
+
+
+Metrics from sklearn:
+Accuracy: 100.0%
+Confusion Matrix: 
+True Negative: 9277 
+False Positive: 0 
+False Negative: 0 
+True Positive: 712
+Recall : 1.0 
+Precision: 1.0 
+ F_score: 1.0 
+
+Application finished at :  2021-07-29 22:27:39.682467
+Total time taken to process:  0:42:05.674310

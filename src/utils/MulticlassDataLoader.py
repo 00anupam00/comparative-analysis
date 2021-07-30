@@ -26,7 +26,7 @@ def load_data(data_path, labels_path, multiclass_param):
     df_labels = df_labels.withColumn('label', when(df_labels.label == 1, lit(multiclass_param)).otherwise(lit(0)))
 
     print("Loaded labels. ")
-    # df_labels.select("id", "label").orderBy('id', ascending=False).show()
+    df_labels.select("id", "label").orderBy('id', ascending=False).show()
 
     # Pass through data pre-processor
     df = pre_process_data(df_data, df_labels)

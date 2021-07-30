@@ -1,0 +1,50 @@
+Application started at :  2021-07-20 05:54:39.747670
+
+Selected Estimator is:  perceptron
+Multiclass Classification... 
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Number of features column:  23
+Tuning model:  perceptron
+Number of features column:  23
+Tuning with cross validation...
+Number of features column:  23
+Tuning with train validation split...
+The best models are saved in 'models/multiclass/*'.
+Training model ...
+Training complete. Base model saved in 'models/multiclass/*'
+
+Evaluating Estimator:  perceptron
+Evaluation results with default params: 
+Test Error = 0.166073 
+Accuracy: 83.39266950296384 
+FPR: 0.8339266950296383
+TPR: 0.8339266950296383
+F-measure: 0.7584095204762985
+Precision: 0.6954337326830554
+Recall: 0.8339266950296383
+
+Evaluation results for hyper params tuned with cross validation: 
+Test Error = 0.166584 
+Accuracy: 83.341585417096 
+FPR: 0.83341585417096
+TPR: 0.83341585417096
+F-measure: 0.7576916981527785
+Precision: 0.6945819859835108
+Recall: 0.83341585417096
+
+Evaluation results for hyper params tuned with train validation split: 
+Test Error = 0.166584 
+Accuracy: 83.341585417096 
+FPR: 0.83341585417096
+TPR: 0.83341585417096
+F-measure: 0.7576916981527785
+Precision: 0.6945819859835108
+Recall: 0.83341585417096
+
+Application finished at :  2021-07-20 11:07:47.497101
+Total time taken to process:  5:13:07.749431

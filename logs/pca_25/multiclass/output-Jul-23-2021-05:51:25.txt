@@ -1,0 +1,136 @@
+Application started at :  2021-07-23 05:51:37.180677
+
+Selected Estimator is:  decision_tree
+Multiclass Classification... 
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Tuning model:  decision_tree
+Tuning with cross validation...
+Traceback (most recent call last):
+  File "/home/ubuntu/outlier-detection/main.py", line 82, in <module>
+    run(sys.argv[1:])
+  File "/home/ubuntu/outlier-detection/main.py", line 72, in run
+    multiclassClassify(estimator=estimator)
+  File "/home/ubuntu/outlier-detection/main.py", line 37, in multiclassClassify
+    tf_df, tdf_cross, tdf_train = process_multiclass_pipeline(df, estimator=estimator)
+  File "/home/ubuntu/outlier-detection/src/multiclass/MulticlassPipeline.py", line 36, in process_multiclass_pipeline
+    tdf_cross, tdf_train = tune_multiclass(df, estimator)
+  File "/home/ubuntu/outlier-detection/src/multiclass/MulticlassPipeline.py", line 54, in tune_multiclass
+    model, tdf_cross = evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
+  File "/home/ubuntu/outlier-detection/src/Tuning.py", line 41, in evaluate_with_cross_validation
+    model = crossval.fit(train)
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/base.py", line 161, in fit
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/tuning.py", line 687, in _fit
+  File "/usr/lib/python3.8/multiprocessing/pool.py", line 868, in next
+    raise value
+  File "/usr/lib/python3.8/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/tuning.py", line 687, in <lambda>
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/tuning.py", line 69, in singleTask
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/base.py", line 69, in __next__
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/base.py", line 126, in fitSingleModel
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/base.py", line 159, in fit
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/pipeline.py", line 114, in _fit
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/base.py", line 161, in fit
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/wrapper.py", line 335, in _fit
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/ml/wrapper.py", line 332, in _fit_java
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/py4j-0.10.9-src.zip/py4j/java_gateway.py", line 1304, in __call__
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/pyspark.zip/pyspark/sql/utils.py", line 111, in deco
+  File "/home/ubuntu/spark/spark-3.1.1-bin-hadoop2.7/python/lib/py4j-0.10.9-src.zip/py4j/protocol.py", line 326, in get_return_value
+py4j.protocol.Py4JJavaError: An error occurred while calling o6397.fit.
+: org.apache.spark.SparkException: Could not execute broadcast in 300 secs. You can increase the timeout for broadcasts via spark.sql.broadcastTimeout or disable broadcast join by setting spark.sql.autoBroadcastJoinThreshold to -1
+	at org.apache.spark.sql.execution.exchange.BroadcastExchangeExec.doExecuteBroadcast(BroadcastExchangeExec.scala:205)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeBroadcast$1(SparkPlan.scala:193)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.executeBroadcast(SparkPlan.scala:189)
+	at org.apache.spark.sql.execution.joins.BroadcastHashJoinExec.doExecute(BroadcastHashJoinExec.scala:142)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.ProjectExec.doExecute(basicPhysicalOperators.scala:92)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.SortExec.doExecute(SortExec.scala:112)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.SampleExec.doExecute(basicPhysicalOperators.scala:302)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.ProjectExec.doExecute(basicPhysicalOperators.scala:92)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.FilterExec.doExecute(basicPhysicalOperators.scala:245)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.columnar.CachedRDDBuilder.buildBuffers(InMemoryRelation.scala:252)
+	at org.apache.spark.sql.execution.columnar.CachedRDDBuilder.cachedColumnBuffers(InMemoryRelation.scala:221)
+	at org.apache.spark.sql.execution.columnar.InMemoryTableScanExec.filteredCachedBatches(InMemoryTableScanExec.scala:144)
+	at org.apache.spark.sql.execution.columnar.InMemoryTableScanExec.inputRDD$lzycompute(InMemoryTableScanExec.scala:95)
+	at org.apache.spark.sql.execution.columnar.InMemoryTableScanExec.inputRDD(InMemoryTableScanExec.scala:81)
+	at org.apache.spark.sql.execution.columnar.InMemoryTableScanExec.doExecute(InMemoryTableScanExec.scala:155)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.FilterExec.doExecute(basicPhysicalOperators.scala:245)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.ProjectExec.doExecute(basicPhysicalOperators.scala:92)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.DeserializeToObjectExec.doExecute(objects.scala:96)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$execute$1(SparkPlan.scala:180)
+	at org.apache.spark.sql.execution.SparkPlan.$anonfun$executeQuery$1(SparkPlan.scala:218)
+	at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)
+	at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:215)
+	at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:176)
+	at org.apache.spark.sql.execution.QueryExecution.toRdd$lzycompute(QueryExecution.scala:132)
+	at org.apache.spark.sql.execution.QueryExecution.toRdd(QueryExecution.scala:131)
+	at org.apache.spark.sql.Dataset.rdd$lzycompute(Dataset.scala:3241)
+	at org.apache.spark.sql.Dataset.rdd(Dataset.scala:3239)
+	at org.apache.spark.ml.feature.PCA.fit(PCA.scala:89)
+	at sun.reflect.GeneratedMethodAccessor131.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.GatewayConnection.run(GatewayConnection.java:238)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.util.concurrent.TimeoutException
+	at java.util.concurrent.FutureTask.get(FutureTask.java:205)
+	at org.apache.spark.sql.execution.exchange.BroadcastExchangeExec.doExecuteBroadcast(BroadcastExchangeExec.scala:194)
+	... 85 more
+

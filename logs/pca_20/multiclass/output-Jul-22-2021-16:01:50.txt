@@ -1,0 +1,47 @@
+Application started at :  2021-07-22 16:02:10.026670
+
+Selected Estimator is:  random_forest
+Multiclass Classification... 
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Tuning model:  random_forest
+Tuning with cross validation...
+Tuning with train validation split...
+The best models are saved in 'models/multiclass/*'.
+Training model ...
+Training complete. Base model saved in 'models/multiclass/*'
+
+Evaluating Estimator:  random_forest
+Evaluation results with default params: 
+Test Error = 0.004285 
+Accuracy: 99.57149990205585 
+FPR: 0.02040352582662056
+TPR: 0.9957149990205584
+F-measure: 0.9952871821885597
+Precision: 0.9957006773006533
+Recall: 0.9957149990205584
+
+Evaluation results for hyper params tuned with cross validation: 
+Test Error = 0.00579564 
+Accuracy: 99.42043608471188 
+FPR: 0.027943027933812592
+TPR: 0.9942043608471187
+F-measure: 0.9933624414505668
+Precision: 0.9942377433268628
+Recall: 0.9942043608471187
+
+Evaluation results for hyper params tuned with train validation split: 
+Test Error = 0.0030952 
+Accuracy: 99.6904799501128 
+FPR: 0.015257564657448373
+TPR: 0.9969047995011281
+F-measure: 0.9965434452894585
+Precision: 0.9969140089474824
+Recall: 0.9969047995011281
+
+Application finished at :  2021-07-22 17:43:39.148752
+Total time taken to process:  1:41:29.122082

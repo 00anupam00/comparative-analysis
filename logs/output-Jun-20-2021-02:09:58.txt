@@ -1,0 +1,150 @@
+Selected Estimator is:  random_forest
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Transformed df:
+root
+ |-- id: long (nullable = true)
+ |-- _c0: double (nullable = true)
+ |-- _c1: double (nullable = true)
+ |-- _c2: double (nullable = true)
+ |-- _c3: double (nullable = true)
+ |-- _c4: double (nullable = true)
+ |-- _c5: double (nullable = true)
+ |-- _c6: double (nullable = true)
+ |-- _c7: double (nullable = true)
+ |-- _c8: double (nullable = true)
+ |-- _c9: double (nullable = true)
+ |-- _c10: double (nullable = true)
+ |-- _c11: double (nullable = true)
+ |-- _c12: double (nullable = true)
+ |-- _c13: double (nullable = true)
+ |-- _c14: double (nullable = true)
+ |-- _c15: double (nullable = true)
+ |-- _c16: double (nullable = true)
+ |-- _c17: double (nullable = true)
+ |-- _c18: double (nullable = true)
+ |-- _c19: double (nullable = true)
+ |-- _c20: double (nullable = true)
+ |-- _c21: double (nullable = true)
+ |-- _c22: double (nullable = true)
+ |-- _c23: double (nullable = true)
+ |-- _c24: double (nullable = true)
+ |-- _c25: double (nullable = true)
+ |-- _c26: double (nullable = true)
+ |-- _c27: double (nullable = true)
+ |-- _c28: double (nullable = true)
+ |-- _c29: double (nullable = true)
+ |-- _c30: double (nullable = true)
+ |-- _c31: double (nullable = true)
+ |-- _c32: double (nullable = true)
+ |-- _c33: double (nullable = true)
+ |-- _c34: double (nullable = true)
+ |-- _c35: double (nullable = true)
+ |-- _c36: double (nullable = true)
+ |-- _c37: double (nullable = true)
+ |-- _c38: double (nullable = true)
+ |-- _c39: double (nullable = true)
+ |-- _c40: double (nullable = true)
+ |-- _c41: double (nullable = true)
+ |-- _c42: double (nullable = true)
+ |-- _c43: double (nullable = true)
+ |-- _c44: double (nullable = true)
+ |-- _c45: double (nullable = true)
+ |-- _c46: double (nullable = true)
+ |-- _c47: double (nullable = true)
+ |-- _c48: double (nullable = true)
+ |-- _c49: double (nullable = true)
+ |-- _c50: double (nullable = true)
+ |-- _c51: double (nullable = true)
+ |-- _c52: double (nullable = true)
+ |-- _c53: double (nullable = true)
+ |-- _c54: double (nullable = true)
+ |-- _c55: double (nullable = true)
+ |-- _c56: double (nullable = true)
+ |-- _c57: double (nullable = true)
+ |-- _c58: double (nullable = true)
+ |-- _c59: double (nullable = true)
+ |-- _c60: double (nullable = true)
+ |-- _c61: double (nullable = true)
+ |-- _c62: double (nullable = true)
+ |-- _c63: double (nullable = true)
+ |-- _c64: double (nullable = true)
+ |-- _c65: double (nullable = true)
+ |-- _c66: double (nullable = true)
+ |-- _c67: double (nullable = true)
+ |-- _c68: double (nullable = true)
+ |-- _c69: double (nullable = true)
+ |-- _c70: double (nullable = true)
+ |-- _c71: double (nullable = true)
+ |-- _c72: double (nullable = true)
+ |-- _c73: double (nullable = true)
+ |-- _c74: double (nullable = true)
+ |-- _c75: double (nullable = true)
+ |-- _c76: double (nullable = true)
+ |-- _c77: double (nullable = true)
+ |-- _c78: double (nullable = true)
+ |-- _c79: double (nullable = true)
+ |-- _c80: double (nullable = true)
+ |-- _c81: double (nullable = true)
+ |-- _c82: double (nullable = true)
+ |-- _c83: double (nullable = true)
+ |-- _c84: double (nullable = true)
+ |-- _c85: double (nullable = true)
+ |-- _c86: double (nullable = true)
+ |-- _c87: double (nullable = true)
+ |-- _c88: double (nullable = true)
+ |-- _c89: double (nullable = true)
+ |-- _c90: double (nullable = true)
+ |-- _c91: double (nullable = true)
+ |-- _c92: double (nullable = true)
+ |-- _c93: double (nullable = true)
+ |-- _c94: double (nullable = true)
+ |-- _c95: double (nullable = true)
+ |-- _c96: double (nullable = true)
+ |-- _c97: double (nullable = true)
+ |-- _c98: double (nullable = true)
+ |-- _c99: double (nullable = true)
+ |-- _c100: double (nullable = true)
+ |-- _c101: double (nullable = true)
+ |-- _c102: double (nullable = true)
+ |-- _c103: double (nullable = true)
+ |-- _c104: double (nullable = true)
+ |-- _c105: double (nullable = true)
+ |-- _c106: double (nullable = true)
+ |-- _c107: double (nullable = true)
+ |-- _c108: double (nullable = true)
+ |-- _c109: double (nullable = true)
+ |-- _c110: double (nullable = true)
+ |-- _c111: double (nullable = true)
+ |-- _c112: double (nullable = true)
+ |-- _c113: double (nullable = true)
+ |-- _c114: double (nullable = true)
+ |-- label: integer (nullable = false)
+ |-- features: vector (nullable = true)
+ |-- rawPrediction: vector (nullable = true)
+ |-- probability: vector (nullable = true)
+ |-- prediction: double (nullable = false)
+
++----+--------------------+----------+--------------------+--------------------+-----+
+|  id|            features|prediction|       rawPrediction|         probability|label|
++----+--------------------+----------+--------------------+--------------------+-----+
+|null|[NaN,1.0000018961...|       0.0|[9.89278126351151...|[0.98927812635115...|    1|
+|null|[NaN,1.0000028524...|       0.0|[9.89278126351151...|[0.98927812635115...|    0|
+|null|[NaN,1.0020527699...|       0.0|[9.15477705109987...|[0.91547770510998...|    0|
+|null|[NaN,1.0320907737...|       0.0|[9.89278126351151...|[0.98927812635115...|    0|
+|null|[NaN,1.0323105236...|       0.0|[9.89278126351151...|[0.98927812635115...|    0|
++----+--------------------+----------+--------------------+--------------------+-----+
+only showing top 5 rows
+
+Metrics for Estimator:  random_forest
+Test Error = 0.00607121 
+Accuracy: 99.39287876688496 
+FPR: 0.015081143633690444
+TPR: 0.9939287876688496
+F-measure: 0.993405958624871
+Precision: 0.9930699607176604
+Recall: 0.9939287876688496

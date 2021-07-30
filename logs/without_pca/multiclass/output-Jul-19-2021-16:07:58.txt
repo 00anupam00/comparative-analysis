@@ -1,0 +1,47 @@
+Application started at :  2021-07-19 16:08:06.479851
+
+Selected Estimator is:  decision_tree
+Multiclass Classification... 
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Loaded dataset. 
+Loaded labels. 
+Tuning model:  decision_tree
+Tuning with cross validation...
+Tuning with train validation split...
+The best models are saved in 'models/multiclass/*'.
+Training model ...
+Training complete. Base model saved in 'models/multiclass/*'
+
+Evaluating Estimator:  decision_tree
+Evaluation results with default params: 
+Test Error = 0.00286854 
+Accuracy: 99.71314592378884 
+FPR: 0.014156112320332473
+TPR: 0.9971314592378886
+F-measure: 0.9966732957229905
+Precision: 0.997140964194638
+Recall: 0.9971314592378886
+
+Evaluation results for hyper params tuned with cross validation: 
+Test Error = 0.00327719 
+Accuracy: 99.67228075997677 
+FPR: 0.01438115499808667
+TPR: 0.9967228075997677
+F-measure: 0.9962486280832922
+Precision: 0.9966126189437354
+Recall: 0.9967228075997677
+
+Evaluation results for hyper params tuned with train validation split: 
+Test Error = 0.00327719 
+Accuracy: 99.67228075997677 
+FPR: 0.01438115499808667
+TPR: 0.9967228075997677
+F-measure: 0.9962486280832922
+Precision: 0.9966126189437354
+Recall: 0.9967228075997677
+
+Application finished at :  2021-07-19 17:39:51.278544
+Total time taken to process:  1:31:44.798693
