@@ -2,6 +2,8 @@ import getopt
 import sys
 from datetime import datetime
 
+import numpy as np
+
 from src.Paths import syn_dos_labels, \
     syn_dos_dataset, arp_spoof_dataset, arp_spoof_labels, ssl_reneg_dataset, ssl_reneg_labels
 from src.binary import Evaluators, BinaryPipeline
@@ -10,6 +12,8 @@ from src.multiclass.DataPreProcessor import load_dataset_with_categories, df_wit
 from src.multiclass.Evaluators import evaluate_multiclass
 from src.multiclass.MulticlassPipeline import process_multiclass_pipeline
 from src.utils import Estimators
+
+from src.featureextractor.FeatureExtractor import FE
 
 
 def binaryClassify(estimator):
@@ -87,6 +91,7 @@ def run(argv):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    run(sys.argv[1:])
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # run(sys.argv[1:])
+    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/active_wiretap_pcap_1000.pcapng")
+    FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/mirai_pcap1000.pcapng")
+    print("number of features: "+str(FE.get_num_features()))

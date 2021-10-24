@@ -9,3 +9,5 @@ sklearn
 neptune-contrib
 scikit-plot
 seaborn
+scapy
+Cython
