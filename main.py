@@ -93,7 +93,7 @@ def run(argv):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # run(sys.argv[1:])
+    run(sys.argv[1:])
     # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/active_wiretap_pcap_1000.pcapng")
-    FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/mirai_pcap1000.pcapng")
-    print("number of features: "+str(FE.get_num_features()))
+    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/mirai_pcap1000.pcapng")
+    # print("number of features: "+str(FE.get_num_features()))
