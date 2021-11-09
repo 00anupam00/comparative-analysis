@@ -1,5 +1,5 @@
 from pyspark.ml.classification import RandomForestClassifier, DecisionTreeClassifier, GBTClassifier, \
-    MultilayerPerceptronClassifier
+    MultilayerPerceptronClassifier, LogisticRegression, LinearSVC, NaiveBayes, FMClassifier
 
 _estimators = dict()
 
@@ -14,6 +14,10 @@ def estimators_for_classifiers():
         'random_forest': RandomForestClassifier(labelCol="label", featuresCol="features", numTrees=10),
         'decision_tree': DecisionTreeClassifier(labelCol="label", featuresCol="features"),
         'gbt': GBTClassifier(labelCol="label", featuresCol="features"),  # only supports binary classification
+        # 'lr' : LogisticRegression(maxIter=10, regParam=0.3, elasticNetParam=0.8), # doesn't work
+        # 'lsvc' : LinearSVC(maxIter=10, regParam=0.1), # doesn't work
+        # 'nb' : NaiveBayes(smoothing=1.0, modelType="multinomial"), # doesn't work
+        # 'fm' : FMClassifier(labelCol="indexedLabel", featuresCol="scaledFeatures", stepSize=0.001) # doesn't work
     }
     return _estimators
 
