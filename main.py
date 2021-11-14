@@ -86,14 +86,14 @@ def run(argv):
         multiclassClassify(estimator=estimator)
 
     endTime = datetime.now()
-    print("\nApplication finished at : ", endTime)
+    print("Application finished at : ", endTime)
     print("Total time taken to process: ", str(endTime - startTime))
 
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    run(sys.argv[1:])
-    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/active_wiretap_pcap_1000.pcapng")
-    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/mirai_pcap1000.pcapng")
-    # print("number of features: "+str(FE.get_num_features()))
+    # run(sys.argv[1:])
+    FE = FE("/home/ubuntu/comparative-analysis/input/active_wiretap_pcap.pcapng")
+    # FE = FE("/home/ubuntu/comparative-analysis/input/Mirai_pcap.pcapng")
+    print("number of features: "+str(FE.get_num_features()))
