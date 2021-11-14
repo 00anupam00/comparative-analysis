@@ -6,18 +6,15 @@ _estimators = dict()
 
 def estimators_for_classifiers():
     global _estimators
-    # specify layers for the neural network:
-    # input layer of size 115 (features), two intermediate of size 5 and 4
-    # and output of size 3 (classes)
+    # Add Param Grid for new algorithms
 
     _estimators = {
         'random_forest': RandomForestClassifier(labelCol="label", featuresCol="features", numTrees=10),
         'decision_tree': DecisionTreeClassifier(labelCol="label", featuresCol="features"),
         'gbt': GBTClassifier(labelCol="label", featuresCol="features"),  # only supports binary classification
-        # 'lr' : LogisticRegression(maxIter=10, regParam=0.3, elasticNetParam=0.8), # doesn't work
-        # 'lsvc' : LinearSVC(maxIter=10, regParam=0.1), # doesn't work
-        # 'nb' : NaiveBayes(smoothing=1.0, modelType="multinomial"), # doesn't work
-        # 'fm' : FMClassifier(labelCol="indexedLabel", featuresCol="scaledFeatures", stepSize=0.001) # doesn't work
+        'lr' : LogisticRegression(maxIter=10, regParam=0.3, elasticNetParam=0.8, family="multinomial"),
+        'nb' : NaiveBayes(smoothing=1.0, modelType="multinomial"),
+        'fm' : FMClassifier(labelCol="label", featuresCol="features", stepSize=0.001)
     }
     return _estimators
 

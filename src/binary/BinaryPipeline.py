@@ -56,6 +56,7 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
 
 def tune_binary(df, estimator):
     evaluator = BinaryClassificationEvaluator(labelCol="label", rawPredictionCol="prediction")
+
     # validation split
     model, validationSplit_tdf = evaluate_with_train_validation_split(df, estimator, get_pipeline(df, estimator), evaluator)
     model.write().overwrite().save("models/binary/"+estimator+"/train_validation")

@@ -4,7 +4,7 @@ from pyspark.sql.types import StructType, StructField, LongType, IntegerType, St
 from src.SparkConfig import get_spark_session
 from src.binary.PrePocessor import pre_process_data
 
-spark = get_spark_session("outlier-detection")
+spark = get_spark_session("comparative-analysis")
 
 
 def load_data(data_path, labels_path, multiclass_param):

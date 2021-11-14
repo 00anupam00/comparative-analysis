@@ -36,3 +36,22 @@ def get_param_grid(estimator):
             .addGrid(algorithm.blockSize, [150, 200]) \
             .addGrid(algorithm.layers, [[23, 15, 10, 4]]) \
             .build()
+    elif estimator == "lr":
+        algorithm = get_estimator(estimator)
+        return ParamGridBuilder() \
+            .addGrid(algorithm.regParam, [0.1, 0.01]) \
+            .addGrid(algorithm.fitIntercept, [False, True]) \
+            .addGrid(algorithm.elasticNetParam, [0.0, 0.5, 1.0]) \
+            .build()
+    elif estimator == "nb":
+        algorithm = get_estimator(estimator)
+        return ParamGridBuilder() \
+            .addGrid(algorithm.smoothing, [1.0, 2.0]) \
+            .build()
+    elif estimator == "fm":
+        algorithm = get_estimator(estimator)
+        return ParamGridBuilder() \
+            .addGrid(algorithm.maxIter, [75, 100, 150]) \
+            .addGrid(algorithm.fitIntercept, [False, True]) \
+            .addGrid(algorithm.fitLinear, [False, True]) \
+            .build()
