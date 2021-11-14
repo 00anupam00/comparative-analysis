@@ -18,10 +18,10 @@ def binaryClassify(estimator):
     df = load_data(syn_dos_dataset, syn_dos_labels)
 
     # load ssl_reneg dataset
-    # df = load_data(ssl_reneg_dataset, ssl_reneg_labels)
-
+    df = load_data(ssl_reneg_dataset, ssl_reneg_labels)
+    #
     # load arp dataset
-    # df = load_data(arp_spoof_dataset, arp_spoof_labels)
+    df = load_data(arp_spoof_dataset, arp_spoof_labels)
 
     df = df.orderBy('id', ascending=False)
 
@@ -88,5 +88,6 @@ def run(argv):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     run(sys.argv[1:])
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/active_wiretap_pcap_1000.pcapng")
+    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/mirai_pcap1000.pcapng")
+    # print("number of features: "+str(FE.get_num_features()))

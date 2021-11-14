@@ -7,6 +7,7 @@ from pyspark.sql import dataframe
 from src.Tuning import evaluate_with_train_validation_split, get_pipeline, evaluate_with_cross_validation
 from src.utils.Estimators import get_estimator
 from src.utils.PrincipalComponents import get_k
+from datetime import datetime
 
 
 def calculate_metrics(trainingSummary):
@@ -34,9 +35,13 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
     pipeline = Pipeline(stages=[assembler, pca, get_estimator(estimator)])
 
     print("Training model ...")
+    trainStartTime = datetime.now()
     train_model = pipeline.fit(train)
     train_model.write().overwrite().save("models/binary/"+estimator+"/base_model")
     print("Training complete. The base model is saved in 'models/binary/*'.")
+    trainEndTime = datetime.now()
+    trainTime = str(trainEndTime - trainStartTime)
+    print("Total time required for training: ",trainTime)
     # make predictions
     tf_df = train_model.transform(test)
 
@@ -51,6 +56,7 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator):
 
 def tune_binary(df, estimator):
     evaluator = BinaryClassificationEvaluator(labelCol="label", rawPredictionCol="prediction")
+
     # validation split
     model, validationSplit_tdf = evaluate_with_train_validation_split(df, estimator, get_pipeline(df, estimator), evaluator)
     model.write().overwrite().save("models/binary/"+estimator+"/train_validation")
