@@ -2,8 +2,6 @@ import getopt
 import sys
 from datetime import datetime
 
-import numpy as np
-
 from src.Paths import syn_dos_labels, \
     syn_dos_dataset, arp_spoof_dataset, arp_spoof_labels, ssl_reneg_dataset, ssl_reneg_labels
 from src.binary import Evaluators, BinaryPipeline
@@ -13,21 +11,17 @@ from src.multiclass.Evaluators import evaluate_multiclass
 from src.multiclass.MulticlassPipeline import process_multiclass_pipeline
 from src.utils import Estimators
 
-from src.featureextractor.FeatureExtractor import FE
-
 
 def binaryClassify(estimator):
     print("Binary Classification... ")
     # load syn dos
-    # df = load_data(syn_dos_dataset, syn_dos_labels)
+    df = load_data(syn_dos_dataset, syn_dos_labels)
 
     # load ssl_reneg dataset
-    # df = load_data(ssl_reneg_dataset, ssl_reneg_labels)
-
+    df = load_data(ssl_reneg_dataset, ssl_reneg_labels)
+    #
     # load arp dataset
-    # df = load_data(arp_spoof_dataset, arp_spoof_labels)
-
-    df = load_data("input/mirai_pcap1000.tsv", )
+    df = load_data(arp_spoof_dataset, arp_spoof_labels)
 
     df = df.orderBy('id', ascending=False)
 
@@ -86,14 +80,14 @@ def run(argv):
         multiclassClassify(estimator=estimator)
 
     endTime = datetime.now()
-    print("Application finished at : ", endTime)
+    print("\nApplication finished at : ", endTime)
     print("Total time taken to process: ", str(endTime - startTime))
 
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # run(sys.argv[1:])
-    FE = FE("/home/ubuntu/comparative-analysis/input/active_wiretap_pcap.pcapng")
-    # FE = FE("/home/ubuntu/comparative-analysis/input/Mirai_pcap.pcapng")
-    print("number of features: "+str(FE.get_num_features()))
+    run(sys.argv[1:])
+    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/active_wiretap_pcap_1000.pcapng")
+    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/mirai_pcap1000.pcapng")
+    # print("number of features: "+str(FE.get_num_features()))

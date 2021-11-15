@@ -25,11 +25,10 @@ def metrics_sklearn(tf_df):
     print("\nMetrics from sklearn:")
     actual = tf_df.select('label').toPandas()
     predicted = tf_df.select('prediction').toPandas()
-    acc = round(accuracy_score(actual, predicted), 9) * 100
+    acc = round(accuracy_score(actual, predicted), 4) * 100
     print("Accuracy: {}%".format(acc))
     print("Confusion Matrix: ")
     cm = confusion_matrix(actual, predicted)
-    cm.ravel()
     tn, fp, fn, tp = cm.ravel()
     print("True Negative"
           ": %s \nFalse Positive: %s \nFalse Negative: %s \nTrue Positive: %s" %(tn, fp, fn, tp))
