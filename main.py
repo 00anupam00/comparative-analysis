@@ -9,23 +9,24 @@ from src.binary.DataLoader import load_data
 from src.multiclass.DataPreProcessor import load_dataset_with_categories, df_with_id
 from src.multiclass.Evaluators import evaluate_multiclass
 from src.multiclass.MulticlassPipeline import process_multiclass_pipeline
+from src.reusabilitytest.ReusabilityTest import run_reusability_test
 from src.utils import Estimators
 
 
 def binaryClassify(estimator):
     print("Binary Classification... ")
     # load syn dos
-    df = load_data(syn_dos_dataset, syn_dos_labels)
+    df = load_data(syn_dos_dataset, syn_dos_labels, ",", "true", "false")
 
     # load ssl_reneg dataset
-    df = load_data(ssl_reneg_dataset, ssl_reneg_labels)
-    #
+    # df = load_data(ssl_reneg_dataset, ssl_reneg_labels, "true", "false")
+
     # load arp dataset
-    df = load_data(arp_spoof_dataset, arp_spoof_labels)
+    # df = load_data(arp_spoof_dataset, arp_spoof_labels, "true", "false")
 
     df = df.orderBy('id', ascending=False)
 
-    tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator)
+    tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator, False)
 
     # Evaluator
     print("\nEvaluating estimator: ", str(estimator))
@@ -57,10 +58,11 @@ def run(argv):
     print("Application started at : ", startTime)
     estimator = ''
     mode = ''
+    reuse = False
     try:
-        opts, args = getopt.getopt(argv, "he:m:", ["estimator=", "mode="])
+        opts, args = getopt.getopt(argv, "he:m:r:", ["estimator=", "mode=", "reuse="])
     except getopt.GetoptError:
-        print('main.py -e <estimators> -m <binary|multiclass>')
+        print('main.py -e <estimators> -m <binary|multiclass> -r <true|false>')
         print('Estimators value could be one of: ', str(Estimators.get_estimator_keys()))
         sys.exit(2)
     for opt, arg in opts:
@@ -71,16 +73,28 @@ def run(argv):
             estimator = arg.strip()
         elif opt in ['-m', '--mode']:
             mode = arg.strip()
+        elif opt in ['-r', '--reuse']:
+            if arg.strip().lower() in ['true', 'y', 'yes']:
+                reuse = True
+    print("Running application with the following arguments:")
+    print("Estimator: ", str(estimator))
+    print("Mode: ", str(mode))
+    print("Reuse: ", str(reuse))
 
-    print("\nSelected Estimator is: ", estimator)
 
-    if "binary" == mode:
-        binaryClassify(estimator=estimator)
-    elif "multiclass" == mode:
-        multiclassClassify(estimator=estimator)
+    print("Selected Estimator is: ", estimator)
+
+    if reuse:
+        print("Running re-usability test.")
+        run_reusability_test(mode, estimator)
+    else:
+        if "binary" == mode:
+            binaryClassify(estimator=estimator)
+        elif "multiclass" == mode:
+            multiclassClassify(estimator=estimator)
 
     endTime = datetime.now()
-    print("\nApplication finished at : ", endTime)
+    print("Application finished at : ", endTime)
     print("Total time taken to process: ", str(endTime - startTime))
 
 
@@ -88,6 +102,3 @@ def run(argv):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     run(sys.argv[1:])
-    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/active_wiretap_pcap_1000.pcapng")
-    # FE = FE("/Users/anupamrakshit/Documents/comparative-analysis/input/mirai_pcap1000.pcapng")
-    # print("number of features: "+str(FE.get_num_features()))

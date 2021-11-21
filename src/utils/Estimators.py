@@ -13,7 +13,7 @@ def estimators_for_classifiers():
         'decision_tree': DecisionTreeClassifier(labelCol="label", featuresCol="features"),
         'gbt': GBTClassifier(labelCol="label", featuresCol="features"),  # only supports binary classification
         'lr' : LogisticRegression(maxIter=10, regParam=0.3, elasticNetParam=0.8, family="multinomial"),
-        'nb' : NaiveBayes(smoothing=1.0, modelType="multinomial"),
+        'nb' : NaiveBayes(smoothing=1.0, modelType="multinomial"), # requires non-negative values
         'fm' : FMClassifier(labelCol="label", featuresCol="features", stepSize=0.001)
     }
     return _estimators

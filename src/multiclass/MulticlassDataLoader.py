@@ -7,10 +7,10 @@ from src.binary.PrePocessor import pre_process_data
 spark = get_spark_session("comparative-analysis")
 
 
-def load_data(data_path, labels_path, multiclass_param):
+def load_data(data_path, labels_path, inferSchema, header, multiclass_param):
     df_data = spark.read.load(
         data_path,
-        format="csv", sep=",", inferSchema="true", header="false")
+        format="csv", sep=",", inferSchema=inferSchema, header=header)
     print("Loaded dataset. ")
 
     labels_schema = StructType([StructField("id", LongType(), False),
