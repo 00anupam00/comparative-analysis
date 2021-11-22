@@ -1,6 +1,6 @@
 from pyspark.ml import Pipeline
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
-from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.feature import VectorAssembler, MinMaxScaler
 from pyspark.ml.feature import PCA
 from pyspark.sql import dataframe
 
@@ -23,16 +23,21 @@ def calculate_metrics(trainingSummary):
 
 
 def process_binary_pipeline(df: dataframe.DataFrame, estimator):
+    pipeline = Pipeline()
     assembler = VectorAssembler(
         inputCols=[x for x in df.columns if x != "label"],
         outputCol="features_v"
     )
 
-    # PCA
-    pca = PCA(k=get_k(), inputCol="features_v", outputCol="features")
     test, train = df.randomSplit([0.6, 0.4], seed=12345)
 
-    pipeline = Pipeline(stages=[assembler, pca, get_estimator(estimator)])
+    if estimator == "nb":
+        scaler = MinMaxScaler(inputCol="features_v", outputCol="scaledFeatures")
+        pca = PCA(k=get_k(), inputCol="scaledFeatures", outputCol="features")
+        pipeline = Pipeline(stages=[assembler, scaler, pca, get_estimator(estimator)])
+    else:
+        pca = PCA(k=get_k(), inputCol="features_v", outputCol="features")
+        pipeline = Pipeline(stages=[assembler, pca, get_estimator(estimator)])
 
     print("Training model ...")
     trainStartTime = datetime.now()
