@@ -6,10 +6,15 @@
 # spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077  comparative-analysis/main.py --estimator random_forest --mode binary > logs/pca/binary/output-$(date +'%b-%d-%Y-%H:%M:%S').txt
 # spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077  comparative-analysis/main.py --estimator random_forest --mode multiclass > logs/pca/multiclass/output-$(date +'%b-%d-%Y-%H:%M:%S').txt
 
- spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077 --executor-memory 4G comparative-analysis/main.py --estimator perceptron --mode multiclass > logs/pca/multiclass/output-$(date +'%b-%d-%Y-%H:%M:%S').txt
+# spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077 --executor-memory 4G comparative-analysis/main.py --estimator perceptron --mode multiclass > logs/pca/multiclass/output-$(date +'%b-%d-%Y-%H:%M:%S').txt
 
+# spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077 comparative-analysis/main.py --estimator lr --mode binary > logs/pca/binary/lr/output-$(date +'%b-%d-%Y-%H:%M:%S').txt
+# spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077 comparative-analysis/main.py --estimator lr --mode multiclass > logs/pca/multiclass/lr/output-$(date +'%b-%d-%Y-%H:%M:%S').txt
 
+# spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077 comparative-analysis/main.py --estimator nb --mode binary > logs/pca/binary/nb/output-$(date +'%b-%d-%Y-%H:%M:%S').txt
 
+# spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077 comparative-analysis/main.py --estimator fm --mode binary > logs/pca/binary/fm/output-$(date +'%b-%d-%Y-%H:%M:%S').txt
+spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077 comparative-analysis/main.py --estimator fm --mode multiclass > logs/pca/multiclass/fm/output-$(date +'%b-%d-%Y-%H:%M:%S').txt
 
 ### WITHOUT PCA
 

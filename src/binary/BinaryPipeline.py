@@ -1,6 +1,6 @@
 from pyspark.ml import Pipeline
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
-from pyspark.ml.feature import VectorAssembler, HashingTF, StringIndexer, OneHotEncoder
+from pyspark.ml.feature import VectorAssembler, MinMaxScaler
 from pyspark.ml.feature import PCA
 from pyspark.sql import dataframe
 
@@ -22,30 +22,31 @@ def calculate_metrics(trainingSummary):
     pass
 
 
-def process_binary_pipeline(df: dataframe.DataFrame, estimator, raw_data):
+def process_binary_pipeline(df: dataframe.DataFrame, estimator):
     pipeline = Pipeline()
-    if raw_data:
-        stages = prepare_stages_for_raw_data()
-        pipeline.setStages(stages)
-    else:
-        assembler = VectorAssembler(
-            inputCols=[x for x in df.columns if x != "label"],
-            outputCol="features_v"
-        )
-        # PCA
-        pca = PCA(k=get_k(), inputCol="features_v", outputCol="features")  # todo can this be omitted?
-        pipeline.setStages([assembler, pca, get_estimator(estimator)])
+    assembler = VectorAssembler(
+        inputCols=[x for x in df.columns if x != "label"],
+        outputCol="features_v"
+    )
 
-    test, train = df.randomSplit([0.7, 0.3], seed=12345)
+    test, train = df.randomSplit([0.6, 0.4], seed=12345)
+
+    if estimator == "nb":
+        scaler = MinMaxScaler(inputCol="features_v", outputCol="scaledFeatures")
+        pca = PCA(k=get_k(), inputCol="scaledFeatures", outputCol="features")
+        pipeline = Pipeline(stages=[assembler, scaler, pca, get_estimator(estimator)])
+    else:
+        pca = PCA(k=get_k(), inputCol="features_v", outputCol="features")
+        pipeline = Pipeline(stages=[assembler, pca, get_estimator(estimator)])
 
     print("Training model ...")
     trainStartTime = datetime.now()
     train_model = pipeline.fit(train)
-    train_model.write().overwrite().save("models/binary/" + estimator + "/base_model")
+    train_model.write().overwrite().save("models/binary/"+estimator+"/base_model")
     print("Training complete. The base model is saved in 'models/binary/*'.")
     trainEndTime = datetime.now()
     trainTime = str(trainEndTime - trainStartTime)
-    print("Total time required for training: ", trainTime)
+    print("Total time required for training: ",trainTime)
     # make predictions
     tf_df = train_model.transform(test)
 
@@ -53,49 +54,22 @@ def process_binary_pipeline(df: dataframe.DataFrame, estimator, raw_data):
     # calculate_metrics(train_model.summary)
 
     # tune pipeline before fit
-    if not raw_data:
-        print("Tuning binary pipeline...")
-        tdf_cross, tdf_train = tune_binary(df, estimator)
-        return tf_df, tdf_cross, tdf_train
-    return tf_df
+    print("Tuning binary pipeline...")
+    tdf_cross, tdf_train = tune_binary(df, estimator)
+    return tf_df, tdf_cross, tdf_train
+
 
 def tune_binary(df, estimator):
     evaluator = BinaryClassificationEvaluator(labelCol="label", rawPredictionCol="prediction")
 
     # validation split
-    model, validationSplit_tdf = evaluate_with_train_validation_split(df, estimator, get_pipeline(df, estimator),
-                                                                      evaluator)
-    model.write().overwrite().save("models/binary/" + estimator + "/train_validation")
+    model, validationSplit_tdf = evaluate_with_train_validation_split(df, estimator, get_pipeline(df, estimator), evaluator)
+    model.write().overwrite().save("models/binary/"+estimator+"/train_validation")
 
     # cross validation fit
     model, cross_valid_tdf = evaluate_with_cross_validation(df, estimator, get_pipeline(df, estimator), evaluator)
-    model.write().overwrite().save("models/binary/" + estimator + "/cross_validation")
+    model.write().overwrite().save("models/binary/"+estimator+"/cross_validation")
 
     print("The best models are saved in 'models/binary/*'.")
 
     return cross_valid_tdf, validationSplit_tdf
-
-
-def prepare_stages_for_raw_data():
-    # categorical_variables = ["frame.time_epoch", "frame.len", "eth.src", "eth.dst", "ip.src", "ip.dst", "tcp.srcport",
-    #                          "tcp.dstport", "udp.srcport", "udp.dstport", "icmp.type", "icmp.code", "arp.opcode",
-    #                          "arp.src.hw_mac", "arp.src.proto_ipv4", "arp.dst.hw_mac", "arp.dst.proto_ipv4", "ipv6.src",
-    #                          "ipv6.dst"]
-    categorical_variables = ["_c0", "_c1", "_c2", "_c3", "_c4", "_c5", "_c6",
-                             "_c7", "_c8", "_c9", "_c10", "_c11", "_c12",
-                             "_c13", "_c14", "_c15", "_c16", "_c17",
-                             "_c18"]
-
-    indexers = [StringIndexer(inputCol=column, outputCol=column + "-index", handleInvalid= "keep")
-                for column in categorical_variables
-                if column not in ["_c10", "_c11", "_c12", "_c13", "_c14", "_c15", "_c16", "_c17", "_c18"]]
-    encoder = OneHotEncoder(
-        inputCols=[indexer.getOutputCol() for indexer in indexers],
-        outputCols=["{0}-encoded".format(indexer.getOutputCol()) for indexer in indexers]
-    )
-    assembler = VectorAssembler(
-        inputCols=encoder.getOutputCols(),
-        outputCol="features_v"
-    )
-    pca = PCA(k=15, inputCol="features_v", outputCol="features")
-    return indexers + [encoder, assembler, pca]
