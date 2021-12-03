@@ -3,13 +3,13 @@ import sys
 from datetime import datetime
 
 from src.Paths import syn_dos_labels, \
-    syn_dos_dataset, arp_spoof_dataset, arp_spoof_labels, ssl_reneg_dataset, ssl_reneg_labels
+    syn_dos_dataset
 from src.binary import Evaluators, BinaryPipeline
 from src.binary.DataLoader import load_data
 from src.multiclass.DataPreProcessor import load_dataset_with_categories, df_with_id
 from src.multiclass.Evaluators import evaluate_multiclass
 from src.multiclass.MulticlassPipeline import process_multiclass_pipeline
-from src.reusabilitytest.ReusabilityTest import run_reusability_test
+from src.featureextractor.PcapFeaturePreparation import pcap_feature_preparation
 from src.utils import Estimators
 
 
@@ -26,7 +26,7 @@ def binaryClassify(estimator):
 
     df = df.orderBy('id', ascending=False)
 
-    tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator, False)
+    tf_df, tdf_cross, tdf_train = BinaryPipeline.process_binary_pipeline(df, estimator)
 
     # Evaluator
     print("\nEvaluating estimator: ", str(estimator))
@@ -60,7 +60,7 @@ def run(argv):
     mode = ''
     reuse = False
     try:
-        opts, args = getopt.getopt(argv, "he:m:r:", ["estimator=", "mode=", "reuse="])
+        opts, args = getopt.getopt(argv, "he:m:p:", ["estimator=", "mode=", "pcap="])
     except getopt.GetoptError:
         print('main.py -e <estimators> -m <binary|multiclass> -r <true|false>')
         print('Estimators value could be one of: ', str(Estimators.get_estimator_keys()))
@@ -73,20 +73,20 @@ def run(argv):
             estimator = arg.strip()
         elif opt in ['-m', '--mode']:
             mode = arg.strip()
-        elif opt in ['-r', '--reuse']:
+        elif opt in ['-r', '--pcap']:
             if arg.strip().lower() in ['true', 'y', 'yes']:
                 reuse = True
     print("Running application with the following arguments:")
     print("Estimator: ", str(estimator))
     print("Mode: ", str(mode))
-    print("Reuse: ", str(reuse))
+    print("Pcap File: ", str(reuse))
 
 
     print("Selected Estimator is: ", estimator)
 
     if reuse:
         print("Running re-usability test.")
-        run_reusability_test(mode, estimator)
+        pcap_feature_preparation(mode, estimator)
     else:
         if "binary" == mode:
             binaryClassify(estimator=estimator)
