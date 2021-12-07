@@ -60,7 +60,7 @@ def run(argv):
     mode = ''
     raw = False
     try:
-        opts, args = getopt.getopt(argv, "he:m:p:", ["estimator=", "mode=", "pcap="])
+        opts, args = getopt.getopt(argv, "he:m:r:", ["estimator=", "mode=", "pcap="])
     except getopt.GetoptError:
         print('main.py -e <estimators> -m <binary|multiclass> -r <true|false>')
         print('Estimators value could be one of: ', str(Estimators.get_estimator_keys()))
@@ -79,7 +79,7 @@ def run(argv):
     print("Running application with the following arguments:")
     print("Estimator: ", str(estimator))
     print("Mode: ", str(mode))
-    print("Pcap File: ", str(reuse))
+    print("Pcap File: ", str(raw))
 
 
     print("Selected Estimator is: ", estimator)
