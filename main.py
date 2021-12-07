@@ -15,10 +15,10 @@ from src.utils import Estimators
 def binaryClassify(estimator):
     print("Binary Classification... ")
     # load syn dos
-    df = load_data(syn_dos_dataset, syn_dos_labels)
+    # df = load_data(syn_dos_dataset, syn_dos_labels)
 
     # load ssl_reneg dataset
-    df = load_data(ssl_reneg_dataset, ssl_reneg_labels)
+    # df = load_data(ssl_reneg_dataset, ssl_reneg_labels)
     #
     # load arp dataset
     df = load_data(arp_spoof_dataset, arp_spoof_labels)
