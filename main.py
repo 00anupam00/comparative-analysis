@@ -58,7 +58,7 @@ def run(argv):
     print("Application started at : ", startTime)
     estimator = ''
     mode = ''
-    reuse = False
+    raw = False
     try:
         opts, args = getopt.getopt(argv, "he:m:p:", ["estimator=", "mode=", "pcap="])
     except getopt.GetoptError:
@@ -75,7 +75,7 @@ def run(argv):
             mode = arg.strip()
         elif opt in ['-r', '--pcap']:
             if arg.strip().lower() in ['true', 'y', 'yes']:
-                reuse = True
+                raw = True
     print("Running application with the following arguments:")
     print("Estimator: ", str(estimator))
     print("Mode: ", str(mode))
@@ -84,7 +84,7 @@ def run(argv):
 
     print("Selected Estimator is: ", estimator)
 
-    if reuse:
+    if raw:
         print("Running re-usability test.")
         pcap_feature_preparation(mode, estimator)
     else:
