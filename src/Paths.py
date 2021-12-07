@@ -28,5 +28,3 @@ arp_spoof_labels = basePath + "/comparative-analysis/input/arp/labels.csv"
 syn_dos_pcap = basePath + "/comparative-analysis/input/syn/dataset.pcap"
 syn_dos_dataset = basePath + "/comparative-analysis/input/syn/dataset.csv"
 syn_dos_labels = basePath + "/comparative-analysis/input/syn/labels.csv"
-
-

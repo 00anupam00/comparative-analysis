@@ -1,4 +1,4 @@
 
 
 def get_k():
-    return 115
+    return 23

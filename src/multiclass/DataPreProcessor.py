@@ -1,13 +1,10 @@
-from pyspark.sql.types import StringType
-
 from src.Paths import ssl_reneg_dataset, arp_spoof_dataset, syn_dos_dataset, ssl_reneg_labels, arp_spoof_labels, \
     syn_dos_labels
 from src.SparkConfig import get_spark_session
-from src.utils.MulticlassDataLoader import load_data
+from src.multiclass.MulticlassDataLoader import load_data
 from src.utils.Utils import generate_id
 
 spark = get_spark_session("comparative-analysis")
-
 
 def load_dataset_with_categories():
     df_ssl = load_data(ssl_reneg_dataset, ssl_reneg_labels, 1)
