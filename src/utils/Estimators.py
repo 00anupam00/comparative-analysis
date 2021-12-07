@@ -1,5 +1,5 @@
 from pyspark.ml.classification import RandomForestClassifier, DecisionTreeClassifier, GBTClassifier, \
-    MultilayerPerceptronClassifier, LogisticRegression, LinearSVC, NaiveBayes, FMClassifier
+    MultilayerPerceptronClassifier, LogisticRegression, NaiveBayes, FMClassifier
 
 _estimators = dict()
 

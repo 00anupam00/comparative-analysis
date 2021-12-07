@@ -1,7 +1,8 @@
 import csv
 
 from src import Paths
-from src.Paths import arp_spoof_pcap, ssl_reneg_labels, arp_spoof_labels, syn_dos_labels
+from src.Paths import arp_spoof_pcap, ssl_reneg_labels, arp_spoof_labels, syn_dos_labels, arp_vec_path, syn_vec_path, \
+    ssl_vec_path
 from src.binary import BinaryPipeline, Evaluators
 from src.binary.DataLoader import load_data
 from src.multiclass.MulticlassDataLoader import load_data
@@ -9,10 +10,6 @@ from src.featureextractor.FeatureExtractor import FE
 from src.multiclass.DataPreProcessor import create_union
 from src.multiclass.Evaluators import evaluate_multiclass
 from src.multiclass.MulticlassPipeline import process_multiclass_pipeline
-
-arp_vec_path = "input/arp/dataset_vec.csv"
-ssl_vec_path = "input/ssl/dataset_vec.csv"
-syn_vec_path = "input/syn/dataset_vec.csv"
 
 
 def pcap_feature_preparation(mode, estimator):
