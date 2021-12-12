@@ -30,11 +30,11 @@
 
 ### WITH CUSTOM EXECUTORS -- TODO
 
-#spark-submit  --master spark://rakshit-thesis.cloud.ut.ee:7077 --num-executors 5 --executor-cores 3 --archives pyspark_venv.tar.gz  ws/comparative-analysis/main.py --estimator decision_tree
+# spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077 comparative-analysis/main.py --estimator random_forest --mode multiclass > logs/efficiency/output-exe15_core1-$(date +'%b-%d-%Y-%H:%M:%S').txt
 # spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077 --num-executors 5 --executor-cores 3 --archives pyspark_venv.tar.gz  ws/comparative-analysis/main.py --estimator random_forest
 #spark-submit  --master spark://rakshit-thesis.cloud.ut.ee:7077 --num-executors 5 --executor-cores 3  --executor-memory 10GB --archives pyspark_venv.tar.gz  ws/comparative-analysis/main.py --estimator perceptron
 
 
-## reusability test
-# spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077  comparative-analysis/main.py --estimator random_forest --mode binary --pcap true > logs/without_pca/binary/output_reuse-$(date +'%b-%d-%Y-%H:%M:%S').txt
- spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077  comparative-analysis/main.py --estimator random_forest --mode multiclass --pcap true > logs/without_pca/multiclass/output_reuse-$(date +'%b-%d-%Y-%H:%M:%S').txt
+## raw packet capture as input
+# spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077  comparative-analysis/main.py --estimator random_forest --mode binary --pcap true > logs/without_pca/binary/output_pcap-$(date +'%b-%d-%Y-%H:%M:%S').txt
+# spark-submit  --master spark://rakshit-thesisv2.cloud.ut.ee:7077  comparative-analysis/main.py --estimator random_forest --mode multiclass --pcap true > logs/without_pca/multiclass/output_pcap-$(date +'%b-%d-%Y-%H:%M:%S').txt
