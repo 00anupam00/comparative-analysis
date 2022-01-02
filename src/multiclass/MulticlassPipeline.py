@@ -28,7 +28,7 @@ def process_multiclass_pipeline(df: dataframe.DataFrame, estimator):
         algo = get_estimator_for_multiclass(estimator)
 
     # Split the data into training and test sets (30% held out for testing)
-    (trainingData, testData) = df.randomSplit([0.7, 0.3])
+    (trainingData, testData) = df.randomSplit([0.6, 0.4])
 
     pipeline = Pipeline().setStages([assembler, pca, algo])
 

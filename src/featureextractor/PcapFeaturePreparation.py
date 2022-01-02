@@ -51,7 +51,7 @@ def pcap_feature_preparation(mode, estimator):
 def get_FE_instance(path):
     return FE(path)
 
-## binary
+## binary feature extractor
 def convert_write_to_csv(path, fe):
     vecs = []
     while True:
